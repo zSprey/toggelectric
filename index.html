@@ -3,115 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToggElectric | Lider EV Topluluğu ve Otorite Haber Portalı</title>
+    <title>ToggElectric | Haber & Topluluk</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#3b82f6', bgmain: '#09090b', bgsec: '#18181b' } } } }</script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#3b82f6', bgmain: '#09090b', bgsec: '#18181b', lightmain: '#f1f5f9', lightsec: '#ffffff' } } } }</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-bgmain text-gray-200 font-sans antialiased">
-    <!-- Navbar -->
-    <nav class="bg-bgmain/80 backdrop-blur-xl border-b border-gray-800 sticky top-0 z-50">
+<body class="bg-lightmain dark:bg-bgmain text-gray-800 dark:text-gray-200 transition-colors">
+    <nav class="bg-white/80 dark:bg-bgmain/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
-            <span class="text-white text-2xl font-black tracking-tight"><i class="fa-solid fa-car-side text-brand mr-2"></i>Togg<span class="text-brand">Electric</span></span>
-            <div class="hidden md:flex space-x-8 text-sm font-semibold text-gray-400">
-                <a href="#haberler" class="hover:text-white transition">Haberler</a>
-                <a href="#forum" class="hover:text-white transition">Sahipler Forumu</a>
-                <a href="#ota" class="hover:text-white transition">Yazılım (OTA)</a>
+            <span class="text-black dark:text-white text-2xl font-black"><i class="fa-solid fa-car-side text-brand mr-2"></i>Togg<span class="text-brand">Electric</span></span>
+            <div class="hidden md:flex space-x-6">
+                <button onclick="toggleWriterPanel()" class="text-brand font-bold"><i class="fa-solid fa-pen-nib mr-1"></i> Yazar Girisi</button>
             </div>
-            <button class="bg-brand text-white text-sm font-bold px-5 py-2 rounded-full hover:bg-blue-600 transition shadow-[0_0_15px_rgba(59,130,246,0.4)]">
-                Katıl
-            </button>
+            <button onclick="toggleTheme()" class="text-gray-500 hover:text-brand"><i id="themeIcon" class="fa-solid fa-sun text-xl"></i></button>
         </div>
     </nav>
 
-    <!-- Ana Manşetler (Bento Layout) -->
-    <section id="haberler" class="max-w-7xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Hero Article -->
-            <div class="lg:col-span-2 relative rounded-3xl overflow-hidden group cursor-pointer border border-gray-800 aspect-[16/9] lg:aspect-auto h-[400px] lg:h-[500px]">
-                <img src="https://images.unsplash.com/photo-1695655075657-6190be674cc6?q=80&w=1200" class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-bgmain via-bgmain/40 to-transparent"></div>
-                <div class="absolute bottom-0 left-0 p-8">
-                    <span class="bg-brand text-white text-xs font-bold px-3 py-1 rounded-full uppercase mb-4 inline-block">İnceleme</span>
-                    <h1 class="text-3xl lg:text-5xl font-black text-white leading-tight mb-3">Togg T10F Test Sürüşü: Aerodinamik Tasarım Menzili Ne Kadar Artırdı?</h1>
-                    <p class="text-gray-300 text-lg hidden md:block">Fastback kasa tipinin rüzgar direncine (Cd) olan etkisi ve uzun yoldaki tüketim verilerini gerçek şartlarda test ettik.</p>
-                </div>
+    <!-- Yazar Paneli (CMS) -->
+    <div id="writerPanel" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center">
+        <div class="bg-white dark:bg-bgsec p-8 rounded-2xl w-full max-w-2xl mx-4 border border-gray-200 dark:border-gray-800 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-black dark:text-white">CMS: Haber Ekle</h2>
+                <button onclick="toggleWriterPanel()" class="text-gray-500"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <!-- Side Articles -->
-            <div class="flex flex-col gap-6">
-                <!-- OTA Card -->
-                <div id="ota" class="bg-gradient-to-br from-bgsec to-bgmain p-6 rounded-3xl border border-gray-800 flex flex-col justify-center h-full relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fa-solid fa-cloud-arrow-down text-8xl"></i></div>
-                    <span class="text-brand text-sm font-bold uppercase tracking-wider mb-2">TruOS Güncellemesi</span>
-                    <h2 class="text-4xl font-black text-white mb-2">v1.5.3</h2>
-                    <p class="text-green-400 text-sm font-bold flex items-center mb-4"><span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span> Dağıtımda</p>
-                    <ul class="text-sm text-gray-400 space-y-2 font-medium">
-                        <li><i class="fa-solid fa-check text-brand mr-1"></i> Adaptif Hız Sabitleyici Optimizasyonu</li>
-                        <li><i class="fa-solid fa-check text-brand mr-1"></i> Spotify Arayüz İyileştirmesi</li>
-                        <li><i class="fa-solid fa-check text-brand mr-1"></i> Klima (HVAC) Batarya Tasarruf Modu</li>
-                    </ul>
-                </div>
-                <!-- Small Article -->
-                <div class="bg-bgsec rounded-3xl p-4 border border-gray-800 flex gap-4 cursor-pointer hover:bg-gray-900 transition h-full items-center">
-                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=400" class="w-24 h-24 rounded-2xl object-cover">
-                    <div>
-                        <h3 class="text-white font-bold leading-snug">Trugo'dan Yeni 300 kW HPC İstasyon Hamlesi</h3>
-                        <p class="text-xs text-gray-500 mt-2">2 saat önce</p>
-                    </div>
-                </div>
+            <form onsubmit="event.preventDefault(); alert('Makale veritabanina kaydedildi (Auto-Seed)'); toggleWriterPanel();" class="space-y-4">
+                <input type="text" placeholder="Haber Basligi" class="w-full bg-gray-100 dark:bg-bgmain border border-gray-300 dark:border-gray-700 p-3 rounded dark:text-white" required>
+                <textarea placeholder="Haber Icerigi (Markdown destekler)" rows="5" class="w-full bg-gray-100 dark:bg-bgmain border border-gray-300 dark:border-gray-700 p-3 rounded dark:text-white" required></textarea>
+                <button type="submit" class="w-full bg-brand text-white font-bold py-3 rounded">Yayinla</button>
+            </form>
+        </div>
+    </div>
+
+    <section class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="newsGrid">
+            <div class="bg-white dark:bg-bgsec p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
+                <span class="text-brand text-xs font-bold uppercase mb-2 block">Guncelleme</span>
+                <h2 class="text-2xl font-black dark:text-white mb-2">TruOS v1.5.3 Yayinda</h2>
+                <p class="text-gray-500 text-sm">Adaptif hiz sabitleyici ve batarya optimizasyonu iceren yeni surum araclara gonderilmeye baslandi.</p>
+            </div>
+            <div class="bg-white dark:bg-bgsec p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
+                <span class="text-brand text-xs font-bold uppercase mb-2 block">Yatirim</span>
+                <h2 class="text-2xl font-black dark:text-white mb-2">Trugo'dan 50 Yeni HPC</h2>
+                <p class="text-gray-500 text-sm">Ankara-Izmir otoyolunda 300 kW gucunde yeni istasyonlar aciliyor.</p>
             </div>
         </div>
     </section>
-
-    <!-- Forum (Topluluk) -->
-    <section id="forum" class="max-w-7xl mx-auto px-4 py-12 border-t border-gray-900">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-            <div>
-                <h2 class="text-3xl font-black text-white flex items-center"><i class="fa-solid fa-users text-brand mr-3"></i>Sahipler Forumu</h2>
-                <p class="text-gray-400 mt-1">Gerçek kullanıcılar, teknik çözümler ve deneyimler.</p>
-            </div>
-            <button class="bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition flex items-center">
-                <i class="fa-solid fa-plus mr-2"></i> Yeni Konu Aç
-            </button>
-        </div>
-
-        <div class="bg-bgsec rounded-3xl border border-gray-800 overflow-hidden">
-            <!-- Data Rows (Generated dynamically to save space) -->
-            <div id="forumThreads"></div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-black py-10 mt-10 border-t border-gray-900 text-center">
-        <p class="text-gray-600 text-sm font-medium">&copy; 2026 ToggElectric. Bağımsız Haber & Topluluk Platformu.</p>
-    </footer>
 
     <script>
-        const threads = [
-            { title: "T10X Kış Lastiği Tavsiyesi (19 inç vs 20 inç)", author: "EvGezgini", rep: 124, view: "4.2k", icon: "fa-snowflake", color: "text-blue-400" },
-            { title: "Bagaj Kapağı Sensörü Bazen Algılamıyor, Çözüm Bulan?", author: "ToggKullanicisi", rep: 45, view: "1.1k", icon: "fa-wrench", color: "text-yellow-500", badge: "ÇÖZÜLDÜ" },
-            { title: "Uzun Yol: İstanbul'dan Antalya'ya 2 Molada Nasıl Gittim?", author: "RotaMaster", rep: 210, view: "8.5k", icon: "fa-route", color: "text-brand" },
-            { title: "Trumore Dijital Anahtar Eşleştirme Hatası (iPhone 15)", author: "TechMan", rep: 12, view: "450", icon: "fa-mobile", color: "text-gray-400" }
-        ];
-
-        document.getElementById('forumThreads').innerHTML = threads.map(t => `
-            <div class="flex items-center justify-between p-5 border-b border-gray-800 hover:bg-gray-900 transition cursor-pointer">
-                <div class="flex items-center gap-4">
-                    <div class="bg-bgmain p-3.5 rounded-2xl border border-gray-800"><i class="fa-solid ${t.icon} ${t.color} text-xl w-6 text-center"></i></div>
-                    <div>
-                        <h4 class="text-white font-bold text-lg md:text-xl flex items-center flex-wrap gap-2">
-                            ${t.title} 
-                            ${t.badge ? `<span class="bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] px-2 py-0.5 rounded-full">${t.badge}</span>` : ''}
-                        </h4>
-                        <p class="text-xs text-gray-500 mt-1 font-medium">Başlatan: <span class="text-gray-300">${t.author}</span></p>
-                    </div>
-                </div>
-                <div class="hidden md:flex gap-6 text-right ml-4">
-                    <div><p class="text-white font-bold">${t.rep}</p><p class="text-[10px] text-gray-500 uppercase tracking-widest">Yanıt</p></div>
-                    <div><p class="text-white font-bold">${t.view}</p><p class="text-[10px] text-gray-500 uppercase tracking-widest">Görüntüleme</p></div>
-                </div>
-            </div>
-        `).join('');
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            document.getElementById('themeIcon').className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun text-xl' : 'fa-solid fa-moon text-xl';
+        }
+        function toggleWriterPanel() { document.getElementById('writerPanel').classList.toggle('hidden'); }
     </script>
 </body>
 </html>
