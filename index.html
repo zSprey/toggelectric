@@ -3,101 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToggElectric | Haber & Sahipler Forumu</title>
+    <title>ToggElectric | Haber & Sahipler Forumu (Supabase Backend)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { tblue: '#3b82f6', bgmain: '#0a0a0a', bgsec: '#171717' } } } }</script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Supabase SDK Placeholder -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-bgmain text-gray-200 font-sans antialiased">
-    <!-- Navbar -->
     <nav class="bg-bgsec/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
             <div class="flex items-center">
                 <span class="text-white text-2xl font-bold"><i class="fa-solid fa-car-battery text-tblue mr-2"></i>Togg<span class="text-tblue">Electric</span></span>
             </div>
-            <div class="hidden md:flex space-x-6 text-sm font-semibold">
-                <a href="#" class="text-gray-400 hover:text-white transition">Haberler</a>
-                <a href="#" class="text-white border-b-2 border-tblue pb-1">Forum</a>
-            </div>
             <div>
-                <button onclick="toggleAuthModal()" class="bg-tblue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
-                    <i class="fa-solid fa-user mr-1"></i> Giriş Yap
+                <button id="authBtn" class="bg-tblue hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+                    <i class="fa-solid fa-circle-notch fa-spin"></i> Yükleniyor...
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Auth Modal (Supabase Bağlantısı İçin Hazır) -->
+    <!-- Supabase Auth Modal -->
     <div id="authModal" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center">
         <div class="bg-bgsec border border-gray-800 rounded-2xl p-8 w-full max-w-md relative shadow-2xl">
             <button onclick="toggleAuthModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             <h2 class="text-2xl font-bold text-white mb-2">Topluluğa Katılın</h2>
-            <p class="text-sm text-gray-400 mb-6">ToggElectric forumunda içerik paylaşmak için giriş yapın.</p>
-            
-            <form class="space-y-4">
+            <form class="space-y-4" onsubmit="event.preventDefault()">
                 <div>
                     <label class="block text-sm text-gray-400 mb-1">E-posta Adresi</label>
-                    <input type="email" class="w-full bg-bgmain border border-gray-800 text-white rounded p-3 focus:border-tblue outline-none" placeholder="isim@ornek.com">
+                    <input type="email" id="email" class="w-full bg-bgmain border border-gray-800 text-white rounded p-3 focus:border-tblue outline-none" placeholder="isim@ornek.com" required>
                 </div>
                 <div>
                     <label class="block text-sm text-gray-400 mb-1">Şifre</label>
-                    <input type="password" class="w-full bg-bgmain border border-gray-800 text-white rounded p-3 focus:border-tblue outline-none" placeholder="••••••••">
+                    <input type="password" id="password" class="w-full bg-bgmain border border-gray-800 text-white rounded p-3 focus:border-tblue outline-none" placeholder="******" required>
                 </div>
-                <button type="button" class="w-full bg-white text-black font-bold py-3 rounded hover:bg-gray-200 transition">Giriş Yap / Kayıt Ol</button>
+                <div class="flex gap-2 mt-4">
+                    <button onclick="handleAuth(false)" class="w-1/2 bg-white text-black font-bold py-3 rounded hover:bg-gray-200 transition">Giriş Yap</button>
+                    <button onclick="handleAuth(true)" class="w-1/2 bg-gray-800 text-white border border-gray-700 font-bold py-3 rounded hover:bg-gray-700 transition">Kayıt Ol</button>
+                </div>
+                <p id="authStatus" class="text-sm text-center font-bold text-tblue mt-2"></p>
             </form>
-            <div class="mt-6 pt-6 border-t border-gray-800 text-center">
-                <p class="text-xs text-gray-500">Supabase Auth entegrasyonu (Faz 3) sağlandığında form aktif olacaktır.</p>
-            </div>
         </div>
     </div>
 
     <!-- Forum Topluluk -->
     <div class="max-w-7xl mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-3xl font-bold text-white border-l-4 border-tblue pl-4">Sahipler Kulübü (Aktif Konular)</h2>
-            <button class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm font-semibold border border-gray-700 transition" onclick="toggleAuthModal()">
+            <h2 class="text-3xl font-bold text-white border-l-4 border-tblue pl-4">Sahipler Kulübü</h2>
+            <button onclick="postThread()" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm font-semibold border border-gray-700 transition">
                 <i class="fa-solid fa-pen mr-1"></i> Yeni Konu Aç
             </button>
         </div>
         
         <div class="bg-bgsec rounded-2xl border border-gray-800 overflow-hidden">
-            <!-- Pinned Post -->
             <div class="flex items-center justify-between p-5 border-b border-gray-800 bg-blue-900/10 cursor-pointer">
                 <div class="flex items-center gap-4">
                     <div class="bg-tblue/20 p-3 rounded-lg"><i class="fa-solid fa-thumbtack text-tblue text-xl"></i></div>
                     <div>
-                        <h4 class="text-white font-bold text-lg">TruOS v1.5 Yazılım Güncellemesi Deneyimleriniz Neler? <span class="bg-red-900/50 text-red-400 text-[10px] px-2 py-0.5 rounded border border-red-800 ml-2">MEGA THREAD</span></h4>
-                        <p class="text-xs text-gray-500 mt-1">Yazar: <span class="text-tblue font-semibold">Admin</span> &bull; Yorum: 342</p>
+                        <h4 class="text-white font-bold text-lg">TruOS v1.5 Yazılım Güncellemesi Deneyimleriniz Neler?</h4>
+                        <p class="text-xs text-gray-500 mt-1">Yazar: Admin</p>
                     </div>
-                </div>
-            </div>
-            <!-- Standard Post -->
-            <div class="flex items-center justify-between p-5 border-b border-gray-800 hover:bg-gray-800/30 transition cursor-pointer">
-                <div class="flex items-center gap-4">
-                    <div class="bg-gray-800 p-3 rounded-lg"><i class="fa-solid fa-snowflake text-blue-300 text-xl"></i></div>
-                    <div>
-                        <h4 class="text-white font-semibold text-lg">T10X V2 Uzun Menzil - Kış Havasında 110km/s Tüketim Değerlerim</h4>
-                        <p class="text-xs text-gray-500 mt-1">Yazar: <span class="text-gray-300">EvTester</span> &bull; 2 saat önce</p>
-                    </div>
-                </div>
-                <div class="hidden md:flex text-right">
-                    <p class="text-white font-bold text-lg">24.5 <span class="text-sm font-normal text-gray-500">kWh/100km</span></p>
                 </div>
             </div>
         </div>
     </div>
     
     <script>
-        function toggleAuthModal() {
-            const modal = document.getElementById('authModal');
-            if(modal.classList.contains('hidden')) {
-                modal.classList.remove('hidden');
+        const supabaseUrl = 'https://isymhicfyatamwiwyuhk.supabase.co';
+        const supabaseKey = 'sb_publishable_Va5Rnrm_uAwrPjKK3ClIzQ_QhJrRadT'; 
+        
+        let _supabase;
+        try {
+            _supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        } catch (err) {
+            document.getElementById('authBtn').innerHTML = 'Hata';
+        }
+
+        let currentUser = null;
+
+        async function initAuth() {
+            if(!_supabase) return;
+            const { data: { session } } = await _supabase.auth.getSession();
+            updateUI(session?.user);
+            
+            _supabase.auth.onAuthStateChange((_event, session) => {
+                updateUI(session?.user);
+            });
+        }
+
+        function updateUI(user) {
+            currentUser = user;
+            const authBtn = document.getElementById('authBtn');
+            if(user) {
+                authBtn.innerHTML = 'Çıkış Yap';
+                authBtn.onclick = async () => { await _supabase.auth.signOut(); };
+                document.getElementById('authModal').classList.add('hidden');
             } else {
-                modal.classList.add('hidden');
+                authBtn.innerHTML = 'Giriş Yap';
+                authBtn.onclick = toggleAuthModal;
             }
         }
+
+        async function handleAuth(isSignUp) {
+            if(!_supabase) return;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const status = document.getElementById('authStatus');
+            
+            if(!email || !password) return status.innerText = 'Alanlari doldurun';
+            status.innerText = 'İşleniyor...';
+            
+            let error, data;
+            if(isSignUp) {
+                const res = await _supabase.auth.signUp({ email, password });
+                error = res.error; data = res.data;
+                if(!error && !data.session) status.innerText = 'E-posta dogrulama linki gonderildi';
+            } else {
+                const res = await _supabase.auth.signInWithPassword({ email, password });
+                error = res.error; data = res.data;
+            }
+
+            if(error) {
+                status.innerText = 'Hata: ' + error.message;
+            } else if(!isSignUp) {
+                status.innerText = 'Giriş başarılı!';
+                setTimeout(() => toggleAuthModal(), 1000);
+            }
+        }
+
+        function toggleAuthModal() {
+            document.getElementById('authModal').classList.toggle('hidden');
+            document.getElementById('authStatus').innerText = '';
+        }
+
+        async function postThread() {
+            if(!currentUser) {
+                toggleAuthModal();
+                document.getElementById('authStatus').innerText = 'Önce giriş yapın.';
+                return;
+            }
+            
+            const title = prompt('Yeni Konu Başlığı:');
+            if(!title) return;
+            
+            const { error } = await _supabase.from('posts').insert([{ title: title, user_id: currentUser.id }]);
+            if(error) {
+                alert('Hata: ' + error.message + ' (Tablo bulunamadi)');
+            } else {
+                alert('Konu açıldı!');
+            }
+        }
+
+        window.onload = initAuth;
     </script>
 </body>
 </html>
