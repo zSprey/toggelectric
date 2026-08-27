@@ -1,44 +1,114 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToggElectric - Elektrikli Araç Portalı</title>
+    <title>ToggElectric | EV Haberleri, Forum ve Togg Topluluğu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { tblue: '#3b82f6', bgmain: '#0a0a0a', bgsec: '#171717' } } }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans">
-    <header class="bg-blue-600 text-white p-6 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">ToggElectric</h1>
-            <nav>
-                <a href="#" class="px-3 hover:underline">Haberler</a>
-                <a href="#" class="px-3 hover:underline">İncelemeler</a>
-                <a href="#" class="px-3 hover:underline">İletişim</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container mx-auto p-6 mt-8 text-center min-h-[60vh]">
-        <h2 class="text-4xl font-extrabold mb-4">Elektrikli Araç Dünyasına Hoş Geldiniz</h2>
-        <p class="text-lg text-gray-700 mb-8">En güncel elektrikli araç haberleri, yerli otomobil ekosistemi ve donanım incelemeleri çok yakında burada.</p>
-        <div class="grid md:grid-cols-3 gap-6 text-left mt-12">
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="font-bold text-xl mb-2">Güncel Haberler</h3>
-                <p>Türkiye ve dünyadaki elektrikli otomotiv sektöründen en sıcak gelişmeler.</p>
+<body class="bg-bgmain text-gray-200 font-sans antialiased">
+    <!-- Navbar -->
+    <nav class="bg-bgsec/90 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
+            <div class="flex items-center">
+                <span class="text-white text-2xl font-bold"><i class="fa-solid fa-car-battery text-tblue mr-2"></i>Togg<span class="text-tblue">Electric</span></span>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="font-bold text-xl mb-2">Donanım İncelemeleri</h3>
-                <p>Menzil testleri, şarj süreleri ve batarya teknolojileri hakkında detaylı yazılar.</p>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                <a href="#" class="text-white border-b-2 border-tblue pb-1">Haberler</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">İncelemeler</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Forum (Topluluk)</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">TruOS Tracker</a>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="font-bold text-xl mb-2">Topluluk</h3>
-                <p>Kullanıcı deneyimleri ve bağımsız EV (Elektrikli Araç) sahipleri forumu.</p>
+            <div>
+                <button class="bg-tblue hover:bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-bold transition">Giriş Yap</button>
             </div>
         </div>
-    </main>
-    <footer class="bg-gray-800 text-gray-400 text-sm p-6 mt-12">
-        <div class="container mx-auto text-center">
+    </nav>
+
+    <!-- Bento Grid Ana Sayfa -->
+    <div class="max-w-7xl mx-auto px-4 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Ana Manşet -->
+            <div class="md:col-span-3 bg-bgsec rounded-2xl overflow-hidden relative group cursor-pointer border border-gray-800">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent z-10"></div>
+                <img src="https://images.unsplash.com/photo-1678129731671-5507bebf7da4?auto=format&fit=crop&q=80&w=1200" class="w-full h-[400px] object-cover group-hover:scale-105 transition duration-700" alt="Togg">
+                <div class="absolute bottom-0 left-0 p-8 z-20">
+                    <span class="bg-tblue text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Son Dakika</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-3 mb-2">Togg T10F Test Sürüşleri Başlıyor: Beklenen Sedan Yollarda</h2>
+                    <p class="text-gray-300 line-clamp-2">Uzun süredir beklenen aerodinamik harikası T10F fastback modelinin teknik özellikleri ve menzil verileri sızdırıldı...</p>
+                </div>
+            </div>
+
+            <!-- OTA Tracker -->
+            <div class="bg-bgsec rounded-2xl p-6 border border-gray-800 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">TruOS Güncelleme Takibi</h3>
+                    <div class="text-3xl font-extrabold text-white">v1.5.2</div>
+                    <p class="text-green-400 text-sm mt-1"><i class="fa-solid fa-circle-check"></i> Stabil Sürüm (Yayında)</p>
+                </div>
+                <div class="mt-4">
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>- YouTube entegrasyonu</li>
+                        <li>- ADAS şerit takip hassasiyeti artırıldı</li>
+                        <li>- UI donma sorunu çözüldü</li>
+                    </ul>
+                    <button class="w-full mt-4 bg-gray-800 hover:bg-gray-700 text-white text-sm py-2 rounded transition">Tüm Sürüm Notları</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forum Topluluk Özeti -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex justify-between items-end mb-6">
+            <h2 class="text-2xl font-bold text-white border-l-4 border-tblue pl-4">Sahipler Kulübü (Forum)</h2>
+            <a href="#" class="text-tblue hover:underline text-sm font-semibold">Tüm Konular <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        
+        <div class="bg-bgsec rounded-2xl border border-gray-800 overflow-hidden">
+            <!-- Forum Satırı -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-800 hover:bg-gray-800/50 transition cursor-pointer">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gray-800 p-3 rounded-lg"><i class="fa-solid fa-battery-half text-tblue text-xl"></i></div>
+                    <div>
+                        <h4 class="text-white font-semibold">Kışın -5 Derecede 120km/s Hızla Menzil Testi (T10X V2)</h4>
+                        <p class="text-xs text-gray-500 mt-1">Başlatan: <span class="text-gray-300">EvTester</span> &bull; 2 saat önce</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex gap-4 text-center">
+                    <div><p class="text-white font-bold text-sm">142</p><p class="text-xs text-gray-500">Yanıt</p></div>
+                    <div><p class="text-white font-bold text-sm">2.4k</p><p class="text-xs text-gray-500">Görüntülenme</p></div>
+                </div>
+            </div>
+            <!-- Forum Satırı -->
+            <div class="flex items-center justify-between p-4 border-b border-gray-800 hover:bg-gray-800/50 transition cursor-pointer">
+                <div class="flex items-center gap-4">
+                    <div class="bg-gray-800 p-3 rounded-lg"><i class="fa-solid fa-triangle-exclamation text-yellow-500 text-xl"></i></div>
+                    <div>
+                        <h4 class="text-white font-semibold">Ekran tamamen karardı, Hard Reset nasıl atılır? <span class="bg-green-900/50 text-green-400 text-[10px] px-2 py-0.5 rounded border border-green-800 ml-2">ÇÖZÜLDÜ</span></h4>
+                        <p class="text-xs text-gray-500 mt-1">Başlatan: <span class="text-gray-300">ToggKullanıcısı</span> &bull; 1 gün önce</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex gap-4 text-center">
+                    <div><p class="text-white font-bold text-sm">38</p><p class="text-xs text-gray-500">Yanıt</p></div>
+                    <div><p class="text-white font-bold text-sm">1.1k</p><p class="text-xs text-gray-500">Görüntülenme</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 py-8 text-center text-gray-500">
             <p>&copy; 2026 ToggElectric. Tüm hakları saklıdır.</p>
-            <p class="mt-2 text-xs">Yasal Uyarı: Bu web sitesi bağımsız bir haber ve bilgi platformudur. Togg markası ile hiçbir resmi bağı yoktur. "Togg", ilgili hak sahiplerinin tescilli markasıdır.</p>
+            <p class="text-xs mt-4">Yasal Uyarı: Bu web sitesi bağımsız bir haber, topluluk ve tartışma platformudur. Togg markası ile hiçbir resmi bağı yoktur.</p>
         </div>
     </footer>
 </body>
