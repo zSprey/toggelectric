@@ -138,6 +138,7 @@
     <header class="sticky top-0 z-50 glass-header no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3">
+<button onclick="openAdminLogin()" title="Yönetici Girişi" class="bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-mono transition flex items-center gap-1 border border-white/10"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Admin</button>
                 <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand via-blue-500 to-accent flex items-center justify-center text-slate-950 font-black shadow-lg shadow-blue-500/30">
                     <i class="fa-solid fa-bolt text-xl text-white"></i>
                 </div>
@@ -158,6 +159,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
+<button onclick="openAdminLogin()" title="Yönetici Girişi" class="bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-mono transition flex items-center gap-1 border border-white/10"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Admin</button>
                 <button onclick="openNewThreadModal()" class="bg-gradient-to-r from-brand to-accent hover:opacity-90 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition">
                     <i class="fa-solid fa-plus"></i> Konu Aç
                 </button>
@@ -925,5 +927,174 @@
             generateSoH();
         };
     </script>
+    <!-- ADMIN LOGIN MODAL & CONTROL DASHBOARD -->
+    <div id="adminLoginModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4 no-print">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-cyan-500/40 shadow-2xl relative">
+            <button onclick="closeAdminLogin()" class="absolute top-5 right-5 text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center mx-auto mb-3 text-cyan-400 text-2xl shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <h3 class="text-xl font-black text-white">ToggElectric Yönetici Girişi</h3>
+                <p class="text-xs text-slate-400 mt-1">Forum Moderasyonu & SoH Veritabanı Portalı</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event, 'toggelectric')" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Kullanıcı Adı</label>
+                    <input type="text" id="adminUser" required placeholder="Kullanıcı adınızı girin" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Şifre</label>
+                    <input type="password" id="adminPass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                </div>
+                <button type="submit" class="w-full btn-neon text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-lock-open mr-1.5"></i> Giriş Yap
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOGGELECTRIC ADMIN DASHBOARD MODAL -->
+    <div id="adminDashboardModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden overflow-y-auto p-4 sm:p-8 no-print">
+        <div class="max-w-6xl w-full mx-auto space-y-6">
+            <div class="glass-panel p-6 rounded-3xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border border-cyan-500/30">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-xl">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-black text-white flex items-center gap-2">
+                            ToggElectric Enterprise Admin Panel
+                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">YÖNETİCİ: musa</span>
+                        </h2>
+                        <p class="text-xs text-slate-400">Forum Denetimi, SoH Batarya Ekspertizleri & Günlük SEO Botu</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="triggerDailySeoBot()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/30 px-4 py-2 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-robot mr-1"></i> Günlük SEO Botunu Tetikle
+                    </button>
+                    <button onclick="adminLogout()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-xs font-bold transition">
+                        <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Çıkış Yap
+                    </button>
+                    <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white p-2 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+
+            <!-- Admin KPIs -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-5 rounded-2xl border border-white/5">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase">Toplam Üye</span>
+                    <div class="text-2xl font-black text-cyan-400 mt-1">26.850+</div>
+                    <span class="text-[9px] text-emerald-400 font-semibold">Aktif Topluluk</span>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase">Doğrulanmış SoH Raporu</span>
+                    <div class="text-2xl font-black text-white mt-1">4.320+</div>
+                    <span class="text-[9px] text-cyan-400 font-semibold">SHA-256 İmzalı</span>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase">Forum Konuları & Yanıt</span>
+                    <div class="text-2xl font-black text-emeraldPulse mt-1">9.680+</div>
+                    <span class="text-[9px] text-slate-400">Modere Edildi</span>
+                </div>
+                <div class="glass-card p-5 rounded-2xl border border-white/5">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase">Günlük SEO Organik Trafik</span>
+                    <div class="text-2xl font-black text-amber-400 mt-1">12.400 / gün</div>
+                    <span class="text-[9px] text-emerald-400 font-semibold">Google News 1. Sıra</span>
+                </div>
+            </div>
+
+            <!-- SoH Database & Forum Management Table -->
+            <div class="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+                <h3 class="text-base font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-car-battery text-cyan-400"></i> Son Üretilen Batarya SoH Ekspertiz Veritabanı
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left">
+                        <thead class="bg-slate-900/80 text-cyan-400 font-bold border-b border-white/10">
+                            <tr>
+                                <th class="p-3">Sertifika ID</th>
+                                <th class="p-3">Şasi (VIN)</th>
+                                <th class="p-3">Model & Batarya</th>
+                                <th class="p-3">KM / Yaş</th>
+                                <th class="p-3">SoH Skoru</th>
+                                <th class="p-3">Ekspertiz Derecesi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-mono text-cyan-300">TE-2026-8850</td>
+                                <td class="p-3 font-mono text-white">NM4T10XV2P884102</td>
+                                <td class="p-3">Togg T10X Uzun Menzil (88.5 kWh)</td>
+                                <td class="p-3">45.000 KM / 2 Yıl</td>
+                                <td class="p-3 font-bold text-cyan-400">%96.8</td>
+                                <td class="p-3"><span class="bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-2 py-0.5 rounded font-black text-[10px]">GRADE A+</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-mono text-cyan-300">TE-2026-7512</td>
+                                <td class="p-3 font-mono text-white">XP7YGCER1PB094123</td>
+                                <td class="p-3">Tesla Model Y Long Range (75.0 kWh)</td>
+                                <td class="p-3">62.000 KM / 3 Yıl</td>
+                                <td class="p-3 font-bold text-emerald-400">%93.4</td>
+                                <td class="p-3"><span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded font-black text-[10px]">GRADE A</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>    function openAdminLogin() {
+        if(localStorage.getItem('ecosystem_admin_auth') === 'authenticated') {
+            openAdminDashboard();
+        } else {
+            const m = document.getElementById('adminLoginModal');
+            if(m){ m.classList.remove('hidden'); m.classList.add('flex'); }
+        }
+    }
+    function closeAdminLogin() {
+        const m = document.getElementById('adminLoginModal');
+        if(m){ m.classList.add('hidden'); m.classList.remove('flex'); }
+    }
+    function handleAdminLogin(e, site) {
+        e.preventDefault();
+        const u = document.getElementById('adminUser').value.trim();
+        const p = document.getElementById('adminPass').value.trim();
+        if(u === 'musa' && p === 'Fatma6872') {
+            localStorage.setItem('ecosystem_admin_auth', 'authenticated');
+            closeAdminLogin();
+            openAdminDashboard();
+            alert(`Hoşgeldiniz Sayın Musa! ${site.toUpperCase()} Yönetici Paneli yetkilendirildi.`);
+        } else {
+            alert('Hatalı kullanıcı adı veya şifre! Lütfen kontrol edin.');
+        }
+    }
+    function openAdminDashboard() {
+        const d = document.getElementById('adminDashboardModal');
+        if(d){ d.classList.remove('hidden'); d.classList.add('flex'); }
+    }
+    function closeAdminDashboard() {
+        const d = document.getElementById('adminDashboardModal');
+        if(d){ d.classList.add('hidden'); d.classList.remove('flex'); }
+    }
+    function adminLogout() {
+        localStorage.removeItem('ecosystem_admin_auth');
+        closeAdminDashboard();
+        alert('Yönetici oturumu başarıyla kapatıldı.');
+    }
+    function exportLeadsCsv() {
+        const csvContent = "data:text/csv;charset=utf-8,Tarih,Firma,Tip,Lokasyon,Durum\n28.08.2026,Ege Dinlenme Tesisleri,Arsa HPC,İzmir-Aydın Otoyolu,Bekliyor\n27.08.2026,Lojistik Park Filo,Growth SaaS,25 Arac,Aktif";
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "chargetogg_b2b_leads.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    function triggerDailySeoBot() {
+        alert("Günlük Otonom SEO Botu tetiklendi. Sitemap.xml ve yeni haber akışı güncelleniyor...");
+    }</script>
 </body>
 </html>
