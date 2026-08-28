@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinamik Kış / Yaz / Hız Gerçek Menzil Simülatörü | Togg Range Lab</title>
+<meta name="description" content="Togg T10X & T10F için hava sıcaklığı, otoyol seyir hızı, ısı pompası kliması ve jant ebadına göre gerçek yol menzili hesaplama simülatörü.">
+<link rel="canonical" href="https://chargetogg.com/menzil-simulasyonu">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#050811;color:#e5e7eb;min-height:100vh;margin:0}
+.glass{background:rgba(255,255,255,.03);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:24px}
+</style>
+</head>
+<body>
+<nav class="border-b border-gray-800/50 bg-gray-900/50 backdrop-blur-xl sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+<a href="/" class="flex items-center gap-2"><i class="fas fa-gauge text-cyan-400 text-xl"></i><span class="font-black text-white text-lg">Togg<span class="text-cyan-400">RangeLab</span> <span class="text-xs bg-cyan-500/20 text-cyan-400 px-2 py-0.5 rounded-full font-bold">Gerçek Menzil</span></span></a>
+<div class="flex items-center gap-4 text-sm">
+<a href="/" class="text-gray-400 hover:text-white transition">Harita</a>
+<a href="/sarj-suresi" class="text-gray-400 hover:text-white transition">Şarj Süresi</a>
+<a href="/karsilastirma" class="text-gray-400 hover:text-white transition">Tarifeler</a>
+<a href="/kokpit" class="text-cyan-400 hover:text-white transition font-semibold"><i class="fas fa-gauge-high mr-1"></i>Kokpit</a>
+</div>
+</div>
+</nav>
+
+<main class="max-w-6xl mx-auto px-4 py-12">
+<div class="text-center mb-12">
+<span class="bg-cyan-500/10 text-cyan-400 text-xs font-bold px-4 py-1.5 rounded-full border border-cyan-500/20 uppercase tracking-wider mb-4 inline-block"><i class="fas fa-snowflake mr-1"></i> Termal & Aerodinamik Tüketim Motoru</span>
+<h1 class="text-4xl md:text-5xl font-black text-white mb-4">Gerçek Yol Koşullarında Togg Menzil Simülatörü</h1>
+<p class="text-gray-400 text-lg max-w-2xl mx-auto">Kışın -5°C'de 130 km/s hızla sürüş yaptığınızda bataryanızın gerçekte kaç kilometre menzil sunacağını anlık simüle edin.</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<!-- Inputs -->
+<div class="lg:col-span-5 glass p-6 md:p-8">
+<h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2"><i class="fas fa-sliders text-cyan-400"></i> Sürüş & Çevre Parametreleri</h2>
+
+<div class="mb-5">
+<label class="text-gray-300 text-sm font-semibold mb-2 block">Araç Modeli</label>
+<select id="simModel" class="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-cyan-500 focus:outline-none" onchange="runRangeSim()">
+<option value="t10x_lr">Togg T10X V2 Uzun Menzil (88.5 kWh - WLTP: 523 km)</option>
+<option value="t10x_sr">Togg T10X V1 Standart (52.4 kWh - WLTP: 314 km)</option>
+<option value="t10f_lr">Togg T10F Fastback Uzun Menzil (88.5 kWh - WLTP: 623 km)</option>
+</select>
+</div>
+
+<div class="mb-5">
+<label class="text-gray-300 text-sm font-semibold mb-2 block flex justify-between">
+<span>Dış Ortam Sıcaklığı</span>
+<span id="txtTemp" class="text-cyan-400 font-bold">20°C (İdeal)</span>
+</label>
+<input type="range" id="rngTemp" min="-15" max="45" value="20" class="w-full accent-cyan-500" oninput="runRangeSim()">
+</div>
+
+<div class="mb-5">
+<label class="text-gray-300 text-sm font-semibold mb-2 block flex justify-between">
+<span>Otoyol Seyir Hızı</span>
+<span id="txtSpeed" class="text-cyan-400 font-bold">110 km/s</span>
+</label>
+<input type="range" id="rngSpeed" min="70" max="140" step="10" value="110" class="w-full accent-cyan-500" oninput="runRangeSim()">
+</div>
+
+<div class="grid grid-cols-2 gap-4 mb-5">
+<div>
+<label class="text-gray-300 text-xs font-semibold mb-2 block">Klima / Isı Pompası</label>
+<select id="simAc" class="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-3 py-2.5 text-white text-xs focus:border-cyan-500 focus:outline-none" onchange="runRangeSim()">
+<option value="eco">Eko Mod (21°C)</option>
+<option value="comfort">Konfor (23°C Isıtma/Soğutma)</option>
+<option value="off">Klima Kapalı</option>
+</select>
+</div>
+<div>
+<label class="text-gray-300 text-xs font-semibold mb-2 block">Jant Ebadı</label>
+<select id="simRim" class="w-full bg-gray-800/60 border border-gray-700 rounded-xl px-3 py-2.5 text-white text-xs focus:border-cyan-500 focus:outline-none" onchange="runRangeSim()">
+<option value="19">19" Standart Jant</option>
+<option value="20">20" Elmas Kesim (+%4 Sürtünme)</option>
+</select>
+</div>
+</div>
+</div>
+
+<!-- Outputs -->
+<div class="lg:col-span-7 space-y-6">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="glass p-5 text-center border-l-4 border-cyan-400">
+<p class="text-gray-400 text-xs mb-1">Gerçek Yol Menzili</p>
+<p id="resRealRange" class="text-3xl font-black text-cyan-400">468 km</p>
+<p id="resWltpComp" class="text-gray-500 text-xs mt-1">WLTP'nin %89'u</p>
+</div>
+<div class="glass p-5 text-center border-l-4 border-emerald-400">
+<p class="text-gray-400 text-xs mb-1">Ortalama Tüketim</p>
+<p id="resConsumption" class="text-3xl font-black text-emerald-400">18.9 kWh</p>
+<p class="text-gray-500 text-xs mt-1">100 km başına enerji</p>
+</div>
+<div class="glass p-5 text-center border-l-4 border-amber-400">
+<p class="text-gray-400 text-xs mb-1">100 KM Maliyeti (Trugo)</p>
+<p id="resCost100" class="text-3xl font-black text-amber-400">₺ 283</p>
+<p class="text-gray-500 text-xs mt-1">14.98 TL/kWh DC</p>
+</div>
+</div>
+
+<!-- Chart -->
+<div class="glass p-6">
+<h3 class="text-base font-bold text-white mb-3"><i class="fas fa-chart-area text-cyan-400 mr-2"></i> Hıza Göre Menzil Değişim Eğrisi</h3>
+<div style="height:220px">
+<canvas id="rangeChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="border-t border-gray-800/30 mt-20 py-8 text-center text-gray-600 text-sm">
+<p>Togg Range Lab Simülasyon Motoru &copy; 2026 | Togg Connected Ecosystem</p>
+</footer>
+
+<script>
+var rangeChartInst = null;
+function runRangeSim() {
+    var model = document.getElementById('simModel').value;
+    var temp = parseInt(document.getElementById('rngTemp').value);
+    var speed = parseInt(document.getElementById('rngSpeed').value);
+    var ac = document.getElementById('simAc').value;
+    var rim = document.getElementById('simRim').value;
+    
+    document.getElementById('txtTemp').textContent = temp + '°C ' + (temp < 0 ? '(Çok Soğuk)' : (temp < 15 ? '(Soğuk)' : (temp <= 25 ? '(İdeal)' : '(Sıcak)')));
+    document.getElementById('txtSpeed').textContent = speed + ' km/s';
+    
+    var packKwh = model === 't10x_lr' ? 88.5 : (model === 't10x_sr' ? 52.4 : 88.5);
+    var wltp = model === 't10x_lr' ? 523 : (model === 't10x_sr' ? 314 : 623);
+    var baseCd = model === 't10f_lr' ? 0.23 : 0.28;
+    
+    // Consumption calculation
+    var baseKwh100 = model === 't10f_lr' ? 15.2 : 18.0;
+    // Speed impact
+    var speedFactor = 1 + (Math.pow(speed / 90, 1.8) - 1) * 0.45;
+    // Temp impact
+    var tempFactor = 1.0;
+    if (temp < 20) tempFactor += (20 - temp) * 0.012; // cold increases consumption
+    else if (temp > 25) tempFactor += (temp - 25) * 0.008; // AC cooling
+    // AC impact
+    var acFactor = ac === 'comfort' ? 1.08 : (ac === 'eco' ? 1.04 : 1.0);
+    // Rim impact
+    var rimFactor = rim === '20' ? 1.04 : 1.0;
+    
+    var finalConsumption = (baseKwh100 * speedFactor * tempFactor * acFactor * rimFactor).toFixed(1);
+    var realRange = Math.round((packKwh / finalConsumption) * 100);
+    var cost100 = Math.round(finalConsumption * 14.98);
+    var wltpRatio = Math.round((realRange / wltp) * 100);
+    
+    document.getElementById('resRealRange').textContent = realRange + ' km';
+    document.getElementById('resConsumption').textContent = finalConsumption + ' kWh';
+    document.getElementById('resCost100').textContent = '₺ ' + cost100;
+    document.getElementById('resWltpComp').textContent = "WLTP'nin %" + wltpRatio + "'u (Hedef: " + wltp + " km)";
+    
+    // Draw Speed Curve
+    var speeds = [80, 90, 100, 110, 120, 130, 140];
+    var ranges = speeds.map(function(s) {
+        var sFact = 1 + (Math.pow(s / 90, 1.8) - 1) * 0.45;
+        var cons = baseKwh100 * sFact * tempFactor * acFactor * rimFactor;
+        return Math.round((packKwh / cons) * 100);
+    });
+    
+    if (rangeChartInst) rangeChartInst.destroy();
+    var ctx = document.getElementById('rangeChart').getContext('2d');
+    rangeChartInst = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: speeds.map(function(s){ return s + ' km/s'; }),
+            datasets: [{
+                label: 'Hıza Göre Menzil (km)',
+                data: ranges,
+                borderColor: '#00e5ff',
+                backgroundColor: 'rgba(0, 229, 255, 0.1)',
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4,
+                pointBackgroundColor: '#00e5ff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                y: { ticks: { color: '#9ca3af' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+            }
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', runRangeSim);
+</script>
+</body>
+</html>
