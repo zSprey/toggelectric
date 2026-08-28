@@ -4,7 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToggElectric | EV Sahipleri Forumu, TruOS & Teknoloji Topluluğu</title>
-    <meta name="description" content="Togg T10X & T10F sahipleri için canlı tartışma forumu, menzil ipuçları, kış lastiği deneyimleri ve TruOS yazılım güncellemeleri.">
+    <meta name="description" content="Togg T10X & T10F sahipleri için canlı tartışma forumu, SoH batarya sertifikası, güncel Togg haberleri ve TruOS yazılım güncellemeleri.">
+    <link rel="canonical" href="https://toggelectric.com/">
+
+    <!-- OpenGraph & Twitter Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toggelectric.com/">
+    <meta property="og:title" content="ToggElectric | EV Sahipleri Forumu ve Batarya SoH Sertifikası">
+    <meta property="og:description" content="Togg T10X & T10F sahipleri için canlı tartışma forumu. Batarya sağlığı raporu alın, TruOS güncellemelerini takip edin.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://toggelectric.com/#website",
+          "url": "https://toggelectric.com/",
+          "name": "ToggElectric",
+          "description": "Togg T10X & T10F sahipleri için topluluk forumu ve batarya analizi"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://toggelectric.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Forum", "item": "https://toggelectric.com/#forum" },
+            { "@type": "ListItem", "position": 3, "name": "Batarya SoH Sertifikası", "item": "https://toggelectric.com/#soh-sertifika" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Togg batarya sağlığı (SoH) nasıl hesaplanır?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Toplam kilometre, DC hızlı şarj sayısı ve araç yaşına bağlı özel bir formülle hesaplanır."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "DiscussionForumPosting",
+          "headline": "Togg T10X Kış Menzili ve Isı Pompası Deneyimleri",
+          "author": { "@type": "Person", "name": "ToggKullanicisi" },
+          "datePublished": "2026-08-28T00:00:00Z"
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,461 +79,1062 @@
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(18, 22, 36, 0.85); backdrop-filter: blur(16px); }
-        .forum-card:hover { transform: translateY(-1px); }
+        .glass { background: rgba(18, 22, 36, 0.7); backdrop-filter: blur(16px); }
+        .light-glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); }
+        .forum-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1); }
+        .news-card:hover img { transform: scale(1.05); }
+        
+        /* Smooth animations */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Avatar colors */
+        .avatar-bg-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .avatar-bg-2 { background: linear-gradient(135deg, #10b981, #059669); }
+        .avatar-bg-3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .avatar-bg-4 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .avatar-bg-5 { background: linear-gradient(135deg, #ec4899, #be185d); }
     </style>
 </head>
 <body class="bg-lightBg dark:bg-darkBg text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased min-h-screen flex flex-col">
 
-    <!-- Top News Ticker -->
-    <div class="bg-slate-900 text-slate-300 text-xs border-b border-slate-800 py-1.5 px-4 overflow-hidden">
+    <!-- Cross-Site Navigation Header -->
+    <div class="bg-slate-950 text-slate-400 text-[10px] sm:text-xs font-semibold py-1.5 px-4 border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="https://toggelectric.com" class="text-brand font-bold">ToggElectric</a>
+                <a href="https://chargetogg.com" class="hover:text-white transition">ChargeTogg</a>
+                <a href="https://servicetogg.com" class="hover:text-white transition">ServiceTogg</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Community Stats Ticker -->
+    <div class="bg-brandDark/20 dark:bg-brandDark/30 border-b border-brand/20 py-2 px-4 overflow-hidden relative">
+        <div class="max-w-7xl mx-auto flex items-center justify-center gap-6 text-xs font-bold text-slate-700 dark:text-slate-200">
             <div class="flex items-center gap-2">
-                <span class="bg-brand text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">CANLI TOPLULUK</span>
-                <span class="truncate">Togg T10F seri üretim hazırlıkları Gemlik tesisinde devam ediyor.</span>
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-ping absolute"></div>
+                <div class="w-2 h-2 rounded-full bg-green-500 relative"></div>
+                <span class="text-green-600 dark:text-green-400">Canlı</span>
             </div>
-            <div class="hidden sm:flex items-center gap-4 text-[11px] text-slate-400">
-                <span><i class="fa-solid fa-comments text-brand mr-1"></i> <span id="totalThreadCount">0</span> Aktif Konu</span>
-                <span><i class="fa-solid fa-users text-emerald-400 mr-1"></i> 26.800+ Üye</span>
-            </div>
+            <span>26.800+ Üye</span>
+            <span class="hidden sm:inline">•</span>
+            <span>1.450+ Konu</span>
+            <span class="hidden sm:inline">•</span>
+            <span>8.200+ Yanıt</span>
+            <span class="hidden sm:inline">•</span>
+            <span>15.000+ Beğeni</span>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-darkBorder">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                <span class="w-10 h-10 rounded-xl bg-brand flex items-center justify-center text-white shadow-lg shadow-brand/30">
-                    <i class="fa-solid fa-bolt-lightning text-lg"></i>
+    <nav class="sticky top-0 z-40 glass border-b border-slate-200 dark:border-darkBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-brand flex items-center justify-center text-white shadow-lg shadow-brand/30">
+                    <i class="fa-solid fa-bolt-lightning text-sm sm:text-lg"></i>
                 </span>
                 <span>Togg<span class="text-brand">Electric</span></span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-7 font-semibold text-sm">
-                <a href="#forum-section" class="hover:text-brand transition flex items-center gap-1.5"><i class="fa-solid fa-comments text-brand"></i> Sahipler Forumu</a>
+            <div class="hidden lg:flex items-center space-x-8 font-semibold text-sm">
                 <a href="#haberler" class="hover:text-brand transition">Haberler</a>
-                <a href="#soh-sertifika" class="hover:text-brand transition">Batarya SoH Raporu</a>
-                <a href="#truos" class="hover:text-brand transition">TruOS Güncellemeleri</a>
+                <a href="#forum" class="hover:text-brand transition flex items-center gap-1.5"><i class="fa-solid fa-comments text-brand"></i> Forum</a>
+                <a href="#soh-sertifika" class="hover:text-brand transition flex items-center gap-1.5"><i class="fa-solid fa-car-battery text-brand"></i> Batarya Raporu</a>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl border border-slate-300 dark:border-darkBorder flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-brand transition">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="toggleTheme()" class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl border border-slate-300 dark:border-darkBorder flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-brand transition">
                     <i id="themeIcon" class="fa-solid fa-sun"></i>
                 </button>
-                <button onclick="openNewThreadModal()" class="bg-brand hover:bg-brandDark text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-brand/25 flex items-center gap-2">
-                    <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Yeni Konu Aç</span>
-                </button>
-                <button onclick="openAuthModal()" id="authBtn" class="bg-slate-200 dark:bg-darkCard border border-slate-300 dark:border-darkBorder text-slate-800 dark:text-slate-200 font-bold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-user text-brand"></i> <span id="authBtnText">Giriş Yap</span>
-                </button>
+                <div id="userMenuArea" class="relative">
+                    <button onclick="openAuthModal()" id="authBtn" class="bg-slate-200 dark:bg-darkCard border border-slate-300 dark:border-darkBorder text-slate-800 dark:text-slate-200 font-bold text-xs px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl transition flex items-center gap-1.5 hover:border-brand">
+                        <i class="fa-solid fa-user text-brand"></i> <span id="authBtnText">Giriş Yap</span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Forum Hero & Search Section -->
-    <section id="forum-section" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-            <div>
-                <span class="text-xs font-extrabold text-brand uppercase tracking-widest">Togg Topluluk Merkezi</span>
-                <h1 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-1">Sahipler & Meraklıları Forumu</h1>
-                <p class="text-xs sm:text-sm text-slate-500 mt-1">Gerçek kullanıcı deneyimleri, menzil analizleri, arıza çözümleri ve yazılım tavsiyeleri.</p>
+    <main class="flex-1">
+        <!-- News & Media Section (Bento Grid) -->
+        <section id="haberler" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-newspaper text-brand text-2xl"></i>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">Togg & EV Dünyası</h2>
             </div>
             
-            <div class="flex flex-wrap gap-2">
-                <button onclick="filterForumCategory('all')" class="forum-cat-btn active bg-brand text-white text-xs font-bold px-3.5 py-2 rounded-xl transition">Tüm Konular</button>
-                <button onclick="filterForumCategory('menzil')" class="forum-cat-btn bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl hover:border-brand border border-transparent transition">Menzil & Şarj</button>
-                <button onclick="filterForumCategory('yazilim')" class="forum-cat-btn bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl hover:border-brand border border-transparent transition">TruOS & Yazılım</button>
-                <button onclick="filterForumCategory('donanim')" class="forum-cat-btn bg-slate-200 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl hover:border-brand border border-transparent transition">Donanım & Bakım</button>
-            </div>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="relative mb-6">
-            <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-3.5 text-sm"></i>
-            <input type="text" id="forumSearch" onkeyup="searchForum()" placeholder="Forumda konu, soru veya etiket ara (Örn: Kış lastiği, TruOS 1.5, Apple CarPlay)..." class="w-full bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-2xl py-3 pl-11 pr-4 text-xs sm:text-sm text-slate-900 dark:text-white outline-none focus:border-brand shadow-sm">
-        </div>
-
-        <!-- Interactive Thread List -->
-        <div id="forumList" class="bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder divide-y divide-slate-200 dark:divide-darkBorder overflow-hidden shadow-sm">
-            <!-- Threads rendered dynamically via JS with persistent replies and likes -->
-        </div>
-    </section>
-
-    <!-- News Bento Grid -->
-    <section id="haberler" class="py-12 bg-slate-100 dark:bg-darkCard/30 border-t border-slate-200 dark:border-darkBorder">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-black text-slate-900 dark:text-white mb-6">Togg & EV Dünyasından Öne Çıkanlar</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-8 relative rounded-3xl overflow-hidden border border-slate-200 dark:border-darkBorder group min-h-[380px] flex flex-col justify-end p-8 bg-slate-900">
-                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200" alt="Togg T10F" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
-                    <div class="relative z-10 space-y-2">
-                        <span class="bg-brand text-white text-[10px] font-black uppercase px-3 py-1 rounded-full">Test Sürüşü</span>
-                        <h3 class="text-2xl sm:text-3xl font-black text-white leading-tight">Togg T10F Fastback: Rüzgar Tüneli Testleri ve 600 KM Tüketim Analizi</h3>
-                        <p class="text-xs sm:text-sm text-slate-300">0.22 Cd sürtünme katsayısı ve çift motorlu 435 HP AWD aktarma organı verileri.</p>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-4 flex flex-col gap-4">
-                    <div id="truos" class="p-6 rounded-3xl bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-black uppercase text-brand">OTA Takibi</span>
-                            <span class="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded-full">v1.5.3</span>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <!-- Hero Article -->
+                <div class="md:col-span-12 lg:col-span-8 news-card group relative rounded-3xl overflow-hidden cursor-pointer h-[400px]">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-900 to-indigo-950 z-0"></div>
+                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200" alt="Togg T10F" class="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-60 transition duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-10"></div>
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-8 z-20 w-full">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="bg-brand text-white text-[10px] font-black uppercase px-3 py-1 rounded-full shadow-lg">Özel Haber</span>
+                            <span class="text-slate-300 text-[10px] font-semibold"><i class="fa-regular fa-clock mr-1"></i> 4 dk okuma</span>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">TruOS Yeni Güncelleme Notları</h4>
-                        <p class="text-xs text-slate-500 mt-1">Isı pompası batarya ön ısıtma ve Spotify arayüz optimizasyonları yayında.</p>
+                        <h3 class="text-2xl sm:text-4xl font-black text-white leading-tight mb-2 group-hover:text-brand transition">Togg T10F Rüzgar Tüneli Testleri ve 0.22 Cd Aerodinamik Detayları</h3>
+                        <p class="text-sm text-slate-300 line-clamp-2 max-w-2xl">600 km menzil hedefini destekleyen yenilikçi aerodinamik tasarımın rüzgar tünelindeki performans analizleri ve mühendislik sırları ortaya çıktı.</p>
                     </div>
-                    <div class="p-6 rounded-3xl bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder">
-                        <span class="text-[10px] font-black uppercase text-amber-500 block mb-1">Şarj Altyapısı</span>
-                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Trugo 81 İlde 900+ Sokete Ulaştı</h4>
-                        <p class="text-xs text-slate-500 mt-1">Otoyol ve AVM noktalarında 300 kW HPC şebekesi genişlemeye devam ediyor.</p>
+                </div>
+
+                <!-- Secondary Articles in Grid -->
+                <div class="md:col-span-6 lg:col-span-4 bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder p-6 flex flex-col justify-between hover:border-brand transition group cursor-pointer shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">Güncelleme</span>
+                            <span class="text-[10px] text-slate-500 font-semibold">Bugün</span>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand transition">TruOS v1.5.3 OTA Güncelleme Detayları</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">Isı pompası optimizasyonu, yeni Spotify arayüzü ve otonom sürüş iyileştirmelerini içeren merakla beklenen güncelleme notları.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 dark:border-darkBorder text-[11px] font-bold text-brand flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Haberi Oku <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="md:col-span-6 lg:col-span-4 bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder p-6 flex flex-col justify-between hover:border-brand transition group cursor-pointer shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/20">Altyapı</span>
+                            <span class="text-[10px] text-slate-500 font-semibold">Dün</span>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand transition">Trugo 81 İl HPC Ağ Genişlemesi Tamamlandı</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">Türkiye'nin dört bir yanındaki 300 kW DC hızlı şarj istasyonlarının güncel haritası ve yeni açılan lokasyonlar.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 dark:border-darkBorder text-[11px] font-bold text-brand flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Haberi Oku <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="md:col-span-6 lg:col-span-4 bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder p-6 flex flex-col justify-between hover:border-brand transition group cursor-pointer shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-purple-500/10 text-purple-500 border border-purple-500/20">Üretim</span>
+                            <span class="text-[10px] text-slate-500 font-semibold">2 gün önce</span>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand transition">Togg 2025 Üretim Hedefi: 100.000 Araç</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">Gemlik tesislerinde kapasite artırımı ve ikinci vardiya planlamaları hakkında CEO'dan gelen açıklamalar.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 dark:border-darkBorder text-[11px] font-bold text-brand flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Haberi Oku <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <div class="md:col-span-6 lg:col-span-4 bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder p-6 flex flex-col justify-between hover:border-brand transition group cursor-pointer shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-blue-500/10 text-blue-500 border border-blue-500/20">Global</span>
+                            <span class="text-[10px] text-slate-500 font-semibold">3 gün önce</span>
+                        </div>
+                        <h4 class="text-lg font-black text-slate-900 dark:text-white mb-2 group-hover:text-brand transition">Avrupa İhracat Planları ve Sertifikasyon Süreci</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">Almanya ve Fransa pazarlarına giriş öncesi tamamlanan testler ve bayilik ağı hazırlıkları.</p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 dark:border-darkBorder text-[11px] font-bold text-brand flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Haberi Oku <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Advanced SoH Battery Certificate Engine -->
+        <section id="soh-sertifika" class="py-12 bg-slate-50 dark:bg-darkCard/30 border-y border-slate-200 dark:border-darkBorder relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand via-emerald-400 to-brand"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    
+                    <!-- Form Side -->
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-6">
+                            <span class="text-xs font-extrabold text-brand uppercase tracking-widest bg-brand/10 px-3 py-1 rounded-full">Yeni Özellik</span>
+                            <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mt-4">Gelişmiş Batarya SoH Sertifikası</h2>
+                            <p class="text-sm text-slate-500 mt-2">Aracınızın kullanım verilerini girerek anında tahmini State of Health (Batarya Sağlığı) sertifikanızı oluşturun ve ikinci el satışlarında güven yaratın.</p>
+                        </div>
+
+                        <form id="sohForm" onsubmit="generateSohCertificate(event)" class="space-y-4 bg-white dark:bg-darkCard p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-darkBorder shadow-lg">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Şasi Numarası (VIN)</label>
+                                    <input type="text" id="sohVin" placeholder="NLT ile başlayan 17 hane" required pattern="[A-HJ-NPR-Z0-9]{17}" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand uppercase">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Toplam Kilometre</label>
+                                    <input type="number" id="sohKm" placeholder="Örn: 15000" required min="0" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Batarya Kapasitesi</label>
+                                    <select id="sohPack" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-xs font-bold outline-none focus:border-brand text-slate-900 dark:text-white">
+                                        <option value="88.5">Uzun Menzil (88.5 kWh)</option>
+                                        <option value="52.4">Standart Menzil (52.4 kWh)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Tahmini DC Hızlı Şarj (Adet)</label>
+                                    <input type="number" id="sohDc" placeholder="Örn: 50" required min="0" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Araç Yaşı (Yıl)</label>
+                                    <input type="number" id="sohAge" placeholder="Örn: 1" required min="0" step="0.1" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3.5 rounded-xl text-xs sm:text-sm transition shadow-lg shadow-brand/25 mt-4 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-microchip"></i> Sertifika Oluştur
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Certificate Result Side -->
+                    <div class="w-full md:w-1/2 flex flex-col items-center justify-center min-h-[400px]">
+                        
+                        <div id="sohPlaceholder" class="text-center p-8 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-3xl w-full">
+                            <i class="fa-solid fa-file-shield text-4xl text-slate-400 mb-4"></i>
+                            <p class="text-sm text-slate-500">Sertifikanız burada görüntülenecektir.</p>
+                        </div>
+
+                        <!-- Generated Certificate (Hidden initially) -->
+                        <div id="sohCertificateContainer" class="hidden w-full max-w-md relative">
+                            <!-- Printable Area -->
+                            <div id="sohCertificate" class="bg-white dark:bg-[#121624] p-6 rounded-3xl shadow-2xl border border-slate-200 dark:border-darkBorder relative overflow-hidden text-slate-900 dark:text-white">
+                                <!-- Decorative BG -->
+                                <div class="absolute -right-10 -top-10 w-40 h-40 bg-brand opacity-10 rounded-full blur-2xl"></div>
+                                <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-emerald-500 opacity-10 rounded-full blur-2xl"></div>
+                                
+                                <!-- Header -->
+                                <div class="flex justify-between items-start mb-6 border-b border-slate-100 dark:border-slate-800 pb-4 relative z-10">
+                                    <div>
+                                        <h3 class="font-black text-xl flex items-center gap-2"><i class="fa-solid fa-car-battery text-brand"></i> SoH Raporu</h3>
+                                        <p class="text-[10px] text-slate-500 mt-1">ToggElectric Akıllı Algoritma</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span id="certGrade" class="inline-block px-3 py-1 bg-green-500 text-white font-black rounded-lg text-lg shadow-lg">A+</span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Metric -->
+                                <div class="text-center py-4 relative z-10">
+                                    <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest block mb-1">Batarya Sağlığı (SoH)</span>
+                                    <span id="certSoh" class="text-5xl font-black text-brand">%98.5</span>
+                                </div>
+
+                                <!-- Stats Grid -->
+                                <div class="grid grid-cols-2 gap-3 mb-6 relative z-10 mt-4">
+                                    <div class="bg-slate-50 dark:bg-[#090a0f] p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <span class="text-[9px] text-slate-500 block mb-1">Kullanılabilir Kapasite</span>
+                                        <span id="certKwh" class="font-bold text-sm">87.2 kWh</span>
+                                    </div>
+                                    <div class="bg-slate-50 dark:bg-[#090a0f] p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <span class="text-[9px] text-slate-500 block mb-1">Tahmini Kalan Menzil (WLTP)</span>
+                                        <span id="certRange" class="font-bold text-sm">510 km</span>
+                                    </div>
+                                    <div class="bg-slate-50 dark:bg-[#090a0f] p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <span class="text-[9px] text-slate-500 block mb-1">Hücre Voltaj Deltası</span>
+                                        <span class="font-bold text-sm text-emerald-500">~12 mV (Mükemmel)</span>
+                                    </div>
+                                    <div class="bg-slate-50 dark:bg-[#090a0f] p-3 rounded-xl border border-slate-100 dark:border-slate-800">
+                                        <span class="text-[9px] text-slate-500 block mb-1">VIN HASH İmzası</span>
+                                        <span id="certHash" class="font-mono text-[9px] truncate block text-slate-600 dark:text-slate-400">abc123...</span>
+                                    </div>
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="text-center text-[8px] text-slate-400 relative z-10 mt-4">
+                                    Bu belge ToggElectric algoritmalarıyla hesaplanmış tahmini bir rapordur, resmi servis belgesi yerine geçmez. Doğrulama: toggelectric.com
+                                </div>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="flex gap-2 mt-4">
+                                <button onclick="downloadPdf()" class="flex-1 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2 hover:opacity-90">
+                                    <i class="fa-solid fa-download"></i> PDF İndir
+                                </button>
+                                <button onclick="shareCertificate()" class="flex-1 bg-brand text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2 hover:bg-brandDark shadow-lg shadow-brand/20">
+                                    <i class="fa-solid fa-share-nodes"></i> Paylaş
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Forum Section -->
+        <section id="forum" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">Topluluk Forumu</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Sahiplerle etkileşime geçin, sorular sorun, çözümler bulun.</p>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 items-center">
+                    <button onclick="filterForumCategory('all')" class="forum-cat-btn active bg-brand text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow-sm">Tümü</button>
+                    <button onclick="filterForumCategory('Menzil & Şarj')" class="forum-cat-btn bg-slate-100 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-darkBorder hover:border-brand transition">Menzil & Şarj</button>
+                    <button onclick="filterForumCategory('TruOS & Yazılım')" class="forum-cat-btn bg-slate-100 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-darkBorder hover:border-brand transition">TruOS & Yazılım</button>
+                    <button onclick="filterForumCategory('Donanım & Bakım')" class="forum-cat-btn bg-slate-100 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-darkBorder hover:border-brand transition">Donanım</button>
+                    <button onclick="filterForumCategory('Genel')" class="forum-cat-btn bg-slate-100 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3.5 py-2 rounded-xl border border-slate-200 dark:border-darkBorder hover:border-brand transition">Genel</button>
+                    
+                    <div class="w-px h-6 bg-slate-300 dark:bg-slate-700 mx-2 hidden sm:block"></div>
+                    
+                    <select id="forumSort" onchange="sortForum()" class="bg-slate-100 dark:bg-darkCard text-slate-700 dark:text-slate-300 text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 dark:border-darkBorder outline-none focus:border-brand cursor-pointer">
+                        <option value="newest">En Yeni</option>
+                        <option value="mostLiked">En Beğenilen</option>
+                        <option value="mostReplied">En Çok Yanıtlanan</option>
+                    </select>
+                    
+                    <button onclick="openNewThreadModal()" class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold px-4 py-2 rounded-xl text-xs transition flex items-center gap-2 hover:opacity-90 ml-auto sm:ml-0 shadow-lg">
+                        <i class="fa-solid fa-pen-to-square"></i> Konu Aç
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="relative mb-6">
+                <i class="fa-solid fa-magnifying-glass text-slate-400 absolute left-4 top-3.5 text-sm"></i>
+                <input type="text" id="forumSearch" onkeyup="searchForum()" placeholder="Forumda ara..." class="w-full bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-2xl py-3 pl-11 pr-4 text-sm text-slate-900 dark:text-white outline-none focus:border-brand shadow-sm">
+            </div>
+
+            <!-- Thread List -->
+            <div id="forumList" class="bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder divide-y divide-slate-200 dark:divide-darkBorder overflow-hidden shadow-sm">
+                <!-- Rendered dynamically -->
+            </div>
+        </section>
+    </main>
 
     <!-- Modals -->
-    <!-- Thread Detail & Reply Modal -->
-    <div id="threadDetailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="w-full max-w-3xl bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl max-h-[85vh] flex flex-col">
-            <div class="flex justify-between items-start pb-4 border-b border-slate-200 dark:border-darkBorder">
-                <div>
-                    <span id="modalThreadCategory" class="text-[9px] font-black uppercase px-2.5 py-0.5 rounded-full bg-brand/10 text-brand border border-brand/20">Kategori</span>
-                    <h3 id="modalThreadTitle" class="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-2">Konu Başlığı</h3>
-                    <p class="text-xs text-slate-500 mt-1">Yazar: <span id="modalThreadAuthor" class="font-bold text-slate-700 dark:text-slate-300">Kullanıcı</span> • <span id="modalThreadBadge" class="text-emerald-400 font-semibold text-[10px]">T10X Sahibi</span></p>
-                </div>
-                <button onclick="closeThreadDetailModal()" class="text-slate-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Auth & Profile Modal -->
+    <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm fade-in">
+        <div class="w-full max-w-md bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl relative">
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 dark:hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            
+            <div id="loginSection">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white mb-2">Topluluğa Katılın</h3>
+                <p class="text-xs text-slate-500 mb-6">Forumda etkileşime geçmek için adınızı girin.</p>
+                <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Kullanıcı Adı</label>
+                        <input type="text" id="userNameInput" placeholder="Örn: ToggTutkunu" required class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-sm outline-none focus:border-brand text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 mb-1">Araç Modeli / Rozet</label>
+                        <select id="userBadgeInput" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-sm outline-none focus:border-brand text-slate-900 dark:text-white">
+                            <option value="T10X Sahibi">T10X Sahibi</option>
+                            <option value="T10F Bekliyor">T10F Bekliyor</option>
+                            <option value="TruOS Beta Tester">TruOS Beta Tester</option>
+                            <option value="Togg Meraklısı">Togg Meraklısı</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl transition shadow-lg shadow-brand/20 mt-2">Giriş Yap</button>
+                </form>
             </div>
 
-            <div class="py-4 overflow-y-auto flex-1 space-y-4">
-                <p id="modalThreadBody" class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-darkBg p-4 rounded-2xl border border-slate-200 dark:border-darkBorder"></p>
-
-                <div>
-                    <h4 class="text-xs font-extrabold uppercase text-slate-500 mb-3"><i class="fa-solid fa-comments mr-1 text-brand"></i> Yanıtlar (<span id="modalReplyCount">0</span>)</h4>
-                    <div id="modalRepliesList" class="space-y-2.5">
-                        <!-- Injected replies -->
+            <div id="profileSection" class="hidden">
+                <div class="flex items-center gap-4 mb-6">
+                    <div id="profileAvatar" class="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-black shadow-lg">U</div>
+                    <div>
+                        <h3 id="profileName" class="text-xl font-black text-slate-900 dark:text-white">User</h3>
+                        <span id="profileBadge" class="text-xs font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full inline-block mt-1">Badge</span>
                     </div>
                 </div>
-            </div>
+                
+                <div class="grid grid-cols-3 gap-3 mb-6 text-center">
+                    <div class="bg-slate-50 dark:bg-darkBg p-3 rounded-xl border border-slate-100 dark:border-darkBorder">
+                        <span class="text-xs text-slate-500 block mb-1">Konular</span>
+                        <span id="statThreads" class="font-black text-lg text-slate-900 dark:text-white">0</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-darkBg p-3 rounded-xl border border-slate-100 dark:border-darkBorder">
+                        <span class="text-xs text-slate-500 block mb-1">Yanıtlar</span>
+                        <span id="statReplies" class="font-black text-lg text-slate-900 dark:text-white">0</span>
+                    </div>
+                    <div class="bg-slate-50 dark:bg-darkBg p-3 rounded-xl border border-slate-100 dark:border-darkBorder">
+                        <span class="text-xs text-slate-500 block mb-1">Beğeniler</span>
+                        <span id="statLikes" class="font-black text-lg text-brand">0</span>
+                    </div>
+                </div>
 
-            <!-- Reply Form -->
-            <form onsubmit="handleAddReply(event)" class="pt-4 border-t border-slate-200 dark:border-darkBorder flex gap-2">
-                <input type="text" id="newReplyInput" placeholder="Bu konuya deneyiminizi veya yanıtınızı yazın..." required class="flex-1 bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand">
-                <button type="submit" class="bg-brand hover:bg-brandDark text-white font-bold px-5 py-3 rounded-xl text-xs transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-paper-plane"></i> <span class="hidden sm:inline">Yanıtla</span>
-                </button>
-            </form>
+                <div class="mb-6">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Seviye</h4>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2">
+                        <div class="bg-brand h-2 rounded-full" style="width: 25%"></div>
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-1 text-right">Yeni Üye</p>
+                </div>
+
+                <button onclick="handleLogout()" class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 font-bold py-3 rounded-xl transition border border-red-500/20">Çıkış Yap</button>
+            </div>
         </div>
     </div>
 
     <!-- New Thread Modal -->
-    <div id="newThreadModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="w-full max-w-lg bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-black text-slate-900 dark:text-white"><i class="fa-solid fa-plus-circle text-brand mr-2"></i>Yeni Tartışma Konusu Aç</h3>
-                <button onclick="closeNewThreadModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
+    <div id="newThreadModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm fade-in">
+        <div class="w-full max-w-lg bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeNewThreadModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 dark:hover:text-white transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+            
+            <h3 class="text-xl font-black text-slate-900 dark:text-white mb-6">Yeni Konu Aç</h3>
             <form onsubmit="handleCreateThread(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori</label>
-                    <select id="newThreadCategory" class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs font-bold outline-none focus:border-brand">
-                        <option value="menzil">Menzil & Şarj Deneyimi</option>
-                        <option value="yazilim">TruOS & Yazılım Güncellemesi</option>
-                        <option value="donanim">Donanım, Lastik & Bakım</option>
+                    <select id="ntCategory" required class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-sm outline-none focus:border-brand text-slate-900 dark:text-white">
+                        <option value="Menzil & Şarj">Menzil & Şarj</option>
+                        <option value="TruOS & Yazılım">TruOS & Yazılım</option>
+                        <option value="Donanım & Bakım">Donanım & Bakım</option>
+                        <option value="Genel">Genel</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Konu Başlığı</label>
-                    <input type="text" id="newThreadTitle" placeholder="Örn: 20 inç jant ile kış tüketimim nasıl değişti?" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Başlık</label>
+                    <input type="text" id="ntTitle" required placeholder="Sorunuzu veya konunuzu özetleyin" class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-sm outline-none focus:border-brand text-slate-900 dark:text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Açıklama & Detaylar</label>
-                    <textarea id="newThreadBody" placeholder="Yaşadığınız deneyimi veya sorunuzu detaylandırın..." rows="4" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs text-slate-900 dark:text-white outline-none focus:border-brand"></textarea>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">İçerik</label>
+                    <textarea id="ntBody" required rows="5" placeholder="Detayları buraya yazın..." class="w-full bg-slate-50 dark:bg-darkBg border border-slate-200 dark:border-darkBorder p-3 rounded-xl text-sm outline-none focus:border-brand text-slate-900 dark:text-white resize-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3.5 rounded-xl text-xs transition shadow-lg shadow-brand/25">
-                    Konuyu Toplulukla Paylaş
-                </button>
+                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-brand/20">Yayınla</button>
             </form>
         </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-        <div class="w-full max-w-sm bg-white dark:bg-darkCard rounded-3xl p-6 border border-slate-200 dark:border-darkBorder shadow-2xl">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-black text-slate-900 dark:text-white">Topluluk Girişi</h3>
-                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <!-- Thread Detail Modal -->
+    <div id="threadDetailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/80 backdrop-blur-sm fade-in">
+        <div class="w-full max-w-4xl bg-white dark:bg-darkCard rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-darkBorder shadow-2xl flex flex-col h-[95vh] sm:h-[85vh]">
+            <!-- Header -->
+            <div class="p-4 sm:p-6 border-b border-slate-200 dark:border-darkBorder flex justify-between items-start flex-shrink-0 bg-slate-50/50 dark:bg-[#121624] rounded-t-2xl sm:rounded-t-3xl">
+                <div class="pr-4">
+                    <span id="tdCategory" class="text-[10px] font-black uppercase px-2 py-1 rounded-full bg-brand/10 text-brand inline-block mb-2">Kategori</span>
+                    <h3 id="tdTitle" class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white leading-tight">Konu Başlığı</h3>
+                </div>
+                <button onclick="closeThreadDetailModal()" class="text-slate-400 hover:text-slate-800 dark:hover:text-white transition text-2xl p-1"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="handleAuthSubmit(event)" class="space-y-3">
-                <input type="email" id="userEmail" placeholder="E-Posta Adresiniz" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                <input type="password" id="userPass" placeholder="Şifreniz" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
-                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl text-xs transition">Giriş Yap / Kaydol</button>
-            </form>
+
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+                <!-- Original Post -->
+                <div class="flex gap-4">
+                    <div id="tdAvatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-black flex-shrink-0 avatar-bg-1 shadow-sm">U</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                            <span id="tdAuthor" class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Author</span>
+                            <span id="tdBadge" class="text-[10px] font-bold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">Badge</span>
+                            <span id="tdDate" class="text-[10px] text-slate-400 ml-auto">Tarih</span>
+                        </div>
+                        <div id="tdBody" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap mt-2 bg-slate-50 dark:bg-[#090a0f] p-4 rounded-2xl border border-slate-100 dark:border-slate-800"></div>
+                        <div class="flex items-center gap-4 mt-3 text-xs">
+                            <button id="tdLikeBtn" onclick="toggleThreadLike()" class="flex items-center gap-1.5 text-slate-500 hover:text-red-500 transition font-semibold bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-lg">
+                                <i class="fa-solid fa-heart"></i> <span id="tdLikes">0</span>
+                            </button>
+                            <span class="text-slate-400 flex items-center gap-1"><i class="fa-solid fa-eye"></i> <span id="tdViews">0</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-200 dark:border-darkBorder">
+
+                <!-- Replies -->
+                <div>
+                    <h4 class="font-black text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-comments text-brand"></i> Yanıtlar (<span id="tdReplyCount">0</span>)
+                    </h4>
+                    <div id="tdRepliesList" class="space-y-4">
+                        <!-- Replies injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reply Input -->
+            <div class="p-4 border-t border-slate-200 dark:border-darkBorder bg-slate-50 dark:bg-[#121624] rounded-b-2xl sm:rounded-b-3xl flex-shrink-0">
+                <form onsubmit="handleAddReply(event)" class="flex gap-2">
+                    <input type="text" id="replyInput" required placeholder="Yanıtınızı buraya yazın..." class="flex-1 bg-white dark:bg-darkBg border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm outline-none focus:border-brand text-slate-900 dark:text-white shadow-sm">
+                    <button type="submit" class="bg-brand hover:bg-brandDark text-white font-bold px-6 rounded-xl transition shadow-md flex items-center justify-center">
+                        <i class="fa-solid fa-paper-plane sm:hidden"></i>
+                        <span class="hidden sm:inline">Gönder</span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-darkBg border-t border-slate-200 dark:border-darkBorder py-12 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 space-y-2">
-            <p class="font-bold text-slate-700 dark:text-slate-300">© 2026 ToggElectric. Türkiye'nin Bağımsız EV Topluluğu ve Medya Platformu.</p>
+    <footer class="bg-white dark:bg-darkCard border-t border-slate-200 dark:border-darkBorder py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <a href="#" class="inline-flex items-center gap-2 text-xl font-black text-slate-900 dark:text-white mb-4 opacity-50 hover:opacity-100 transition">
+                <i class="fa-solid fa-bolt-lightning text-brand"></i> ToggElectric
+            </a>
+            <p class="text-xs text-slate-500">© 2026 ToggElectric. Bu site bağımsız bir topluluk platformudur. Togg markası ile resmi bir bağı yoktur.</p>
         </div>
     </footer>
 
     <script>
-        const initialForumData = [
+        /* =========================================
+           DATA & STATE
+        ========================================= */
+        const initialThreads = [
             {
-                id: 1,
-                category: "menzil",
-                title: "T10X Kış Lastiği Deneyimi: 19 inç vs 20 inç Tüketim Farkı",
-                author: "MenzilUzmanı",
-                badge: "T10X V2 Sahibi",
-                body: "İstanbul-Bolu güzergahında hava 2 dereceyken yaptığım testte 19 inç kış lastikleri 100 km'de 21.4 kWh tüketirken, 20 inç jantlar 23.8 kWh tüketti. Isı pompasının etkisi inanılmaz.",
-                likes: 42,
-                views: "4.8k",
-                icon: "fa-snowflake",
+                id: 1, category: "Menzil & Şarj", title: "Kışın Isı Pompası Kullanımı ve Menzil Etkisi", author: "Bora_T10X", badge: "T10X Sahibi", date: "2 saat önce",
+                body: "Arkadaşlar merhaba, kışın hava -2 dereceyken uzun yola çıktım. Isı pompasını auto modunda 22 dereceye ayarladım. Tüketim ortalama 22 kWh/100km oldu. Sizce bu değer normal mi? Eco modda kullansam çok fark eder mi?",
+                likes: 14, views: 245,
                 replies: [
-                    { author: "EVSeyyahı", text: "Kesinlikle katılıyorum, 19 inç jantlar kışın menzile en az %8 katkı sağlıyor.", time: "3 saat önce" },
-                    { author: "ElektrikMüh", text: "Hava basınçlarını soğuk havada 2.6 bara ayarlamayı unutmayın.", time: "1 saat önce" }
+                    { id: 101, author: "EV_Master", badge: "Uzman", text: "-2 derece için 22 kWh bence gayet iyi bir değer. Eco moda alırsanız ısıtıcının gücü kısılıyor, içerisi biraz serin kalabilir ama menzile %5-10 arası katkısı olur.", date: "1 saat önce", likes: 5 },
+                    { id: 102, author: "ToggFan", badge: "T10X Sahibi", text: "Ben de benzer değerler görüyorum. Kış lastiklerinin de tüketimi artırdığını unutmayın.", date: "45 dk önce", likes: 2 }
                 ]
             },
             {
-                id: 2,
-                category: "yazilim",
-                title: "TruOS v1.5.3 Sonrası Şerit Takip ve Tabela Okuma Hassasiyeti",
-                author: "YazılımKaptanı",
-                badge: "TruOS Moderatörü",
-                body: "v1.5.3 güncellemesini dün gece OTA üzerinden yükledim. Özellikle yağmurlu havada şerit algılama ve hız tabelası okuma tepkime süresi belirgin şekilde hızlanmış.",
-                likes: 68,
-                views: "6.2k",
-                icon: "fa-code-branch",
+                id: 2, category: "TruOS & Yazılım", title: "v1.5.3 OTA Güncellemesi Geldi! (Deneyimlerim)", author: "CemTech", badge: "TruOS Beta Tester", date: "5 saat önce",
+                body: "Beklenen 1.5.3 sürümü nihayet dün gece indi. Fark ettiğim yenilikler:\n- Spotify arayüzü çok daha akıcı olmuş, takılmalar gitmiş.\n- Şerit takip asistanı virajlarda daha pürüzsüz direksiyon düzeltmesi yapıyor.\n- Kamera açılış hızı yaklaşık 1 saniye hızlanmış.\n\nSiz neler fark ettiniz?",
+                likes: 38, views: 890,
                 replies: [
-                    { author: "ToggDriver34", text: "Bende de Spotify geçişleri çok daha akıcı hale geldi.", time: "4 saat önce" }
+                    { id: 201, author: "Ali_V2", badge: "T10X Sahibi", text: "Kamera hızı gerçekten fark etmiş, dar yerlerde park ederken beklememek çok iyi.", date: "2 saat önce", likes: 8 }
                 ]
             },
             {
-                id: 3,
-                category: "menzil",
-                title: "İstanbul - Antalya Kesintisiz Yolculuk: Trugo Oksijen Şarj İpuçları",
-                author: "EVSeyyahı",
-                badge: "T10X V2 Sahibi",
-                body: "İstanbul'dan Antalya'ya O-5 ve Afyon üzerinden 2 şarj molasıyla (Oksijen 168 ve Afyon İkbal Trugo 300kW) toplam 7 saat 45 dakikada vardım. Trugo HPC ile 20 dakikada %20'den %80'e doldu.",
-                likes: 95,
-                views: "11.4k",
-                icon: "fa-route",
+                id: 3, category: "Donanım & Bakım", title: "20 İnç Jant için Kış Lastiği Önerisi (Sessiz ve Yumuşak)", author: "Yolcu34", badge: "T10F Bekliyor", date: "1 gün önce",
+                body: "20 inç jantlar görünüm olarak harika ama kış lastiği seçerken konfordan çok ödün vermek istemiyorum. Michelin Pilot Alpin 5 SUV ile Continental WinterContact TS 870 P arasında kaldım. T10X'te hangisi daha sessiz hissettiriyor?",
+                likes: 12, views: 340,
+                replies: []
+            },
+            {
+                id: 4, category: "Genel", title: "Togg Kasko Sigortası Yenileme Teklifleri 2026", author: "Ahmet_E", badge: "Togg Meraklısı", date: "2 gün önce",
+                body: "İlk yılımız doldu, kasko yenilemesi için aldığım teklifler 18.000 TL ile 32.000 TL arasında değişiyor. Batarya muafiyetsiz ve yetkili servis şartı olan hangi firmaları önerirsiniz?",
+                likes: 24, views: 1200,
                 replies: [
-                    { author: "Kaan_EV", text: "Afyon İkbal'deki 300kW istasyonda sıra var mıydı?", time: "2 saat önce" },
-                    { author: "EVSeyyahı", text: "Hayır, 4 soket de aktifti ve hiç beklemedim.", time: "1 saat önce" }
+                    { id: 401, author: "Sigortaci", badge: "Uzman", text: "Elektrikli araçlarda batarya teminatı çok kritik. Mutlaka poliçede 'batarya hasarları eksiksiz ödenir' ibaresini arayın.", date: "1 gün önce", likes: 15 }
                 ]
             },
             {
-                id: 4,
-                category: "donanim",
-                title: "Ev Tipi 11 kW AC Şarj İstasyonu Kurulumu ve İtfaiye/Site İzin Süreci",
-                author: "ElektrikMüh",
-                badge: "Sertifikalı Uzman",
-                body: "Apartman kapalı otoparkına kendi sayacımızdan kablo çekerek 11kW Type-2 şarj ünitesi kurduk. Kat mülkiyeti kanunu gereği site yönetimine verilen dilekçe şablonunu paylaşıyorum.",
-                likes: 54,
-                views: "3.9k",
-                icon: "fa-house-bolt",
+                id: 5, category: "Menzil & Şarj", title: "Trugo 300kW İstasyonda 198kW Güç Gördüm", author: "SpeedyEV", badge: "T10X Sahibi", date: "3 gün önce",
+                body: "Bugün Afyon Trugo istasyonunda şarja başladım. Bataryam %15 civarındaydı ve ön ısıtma yapmıştım. Ekranda anlık 198 kW çekim hızını gördüm! %20'den %80'e tam 24 dakikada geldi. Harika bir hız.",
+                likes: 56, views: 2100,
                 replies: []
             }
         ];
 
-        let forumThreads = [];
-        let currentOpenThreadId = null;
+        let threads = [];
+        let currentUser = null;
         let currentFilter = 'all';
+        let currentSort = 'newest';
+        let activeThreadId = null;
 
-        function loadForumData() {
-            const saved = localStorage.getItem('togg_forum_threads');
-            if (saved) {
-                try { forumThreads = JSON.parse(saved); } catch(e) { forumThreads = [...initialForumData]; }
+        /* =========================================
+           INITIALIZATION
+        ========================================= */
+        window.onload = () => {
+            initAuth();
+            loadThreads();
+            checkTheme();
+        };
+
+        function checkTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-sun';
             } else {
-                forumThreads = [...initialForumData];
-                saveForumData();
+                document.documentElement.classList.remove('dark');
+                document.getElementById('themeIcon').className = 'fa-solid fa-moon';
             }
-            renderForumThreads();
-        }
-
-        function saveForumData() {
-            localStorage.setItem('togg_forum_threads', JSON.stringify(forumThreads));
-            document.getElementById('totalThreadCount').innerText = forumThreads.length;
-        }
-
-        function renderForumThreads(threadsToRender = null) {
-            const list = document.getElementById('forumList');
-            const data = threadsToRender || forumThreads;
-            document.getElementById('totalThreadCount').innerText = forumThreads.length;
-
-            if (data.length === 0) {
-                list.innerHTML = `<div class="p-8 text-center text-xs text-slate-500">Aramanıza uygun tartışma konusu bulunamadı. İlk konuyu siz açın!</div>`;
-                return;
-            }
-
-            list.innerHTML = data.map(t => `
-                <div class="p-5 hover:bg-slate-50 dark:hover:bg-darkBg/60 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4 forum-card cursor-pointer" onclick="openThreadDetail(${t.id})">
-                    <div class="flex items-start gap-4 min-w-0">
-                        <div class="w-11 h-11 rounded-2xl bg-brand/10 text-brand border border-brand/20 flex items-center justify-center flex-shrink-0 text-lg mt-1 sm:mt-0">
-                            <i class="fa-solid ${t.icon || 'fa-comments'}"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <div class="flex items-center gap-2 mb-1 flex-wrap">
-                                <span class="bg-brand/10 text-brand text-[9px] font-black uppercase px-2 py-0.5 rounded-full border border-brand/20">${t.category}</span>
-                                <h4 class="font-bold text-sm text-slate-900 dark:text-white truncate hover:text-brand transition">${t.title}</h4>
-                            </div>
-                            <p class="text-xs text-slate-500 line-clamp-1 mb-1">${t.body}</p>
-                            <p class="text-[11px] text-slate-400">Yazar: <span class="font-semibold text-slate-300">${t.author}</span> • <span class="text-emerald-400 font-medium">${t.badge || 'Üye'}</span></p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 text-xs text-slate-400 self-end sm:self-center flex-shrink-0">
-                        <button onclick="event.stopPropagation(); likeThread(${t.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-darkBg hover:text-brand transition">
-                            <i class="fa-solid fa-heart text-red-500"></i> <span class="font-bold text-slate-700 dark:text-slate-300">${t.likes}</span>
-                        </button>
-                        <div class="flex items-center gap-1 text-slate-500">
-                            <i class="fa-solid fa-comment text-brand"></i> <span class="font-bold text-slate-700 dark:text-slate-300">${t.replies ? t.replies.length : 0}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function openThreadDetail(id) {
-            const thread = forumThreads.find(t => t.id === id);
-            if (!thread) return;
-            currentOpenThreadId = id;
-
-            document.getElementById('modalThreadCategory').innerText = thread.category.toUpperCase();
-            document.getElementById('modalThreadTitle').innerText = thread.title;
-            document.getElementById('modalThreadAuthor').innerText = thread.author;
-            document.getElementById('modalThreadBadge').innerText = thread.badge || 'Togg Sahibi';
-            document.getElementById('modalThreadBody').innerText = thread.body;
-            
-            renderModalReplies(thread.replies || []);
-            document.getElementById('threadDetailModal').classList.remove('hidden');
-        }
-
-        function renderModalReplies(replies) {
-            document.getElementById('modalReplyCount').innerText = replies.length;
-            const container = document.getElementById('modalRepliesList');
-            if (replies.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 py-3">Henüz yanıt yazılmamış. İlk yanıtı siz bırakın!</p>`;
-                return;
-            }
-            container.innerHTML = replies.map(r => `
-                <div class="p-3.5 rounded-xl bg-slate-100 dark:bg-darkBg/90 border border-slate-200 dark:border-darkBorder text-xs space-y-1">
-                    <div class="flex justify-between items-center text-[10px] text-slate-400">
-                        <span class="font-bold text-brand">${r.author}</span>
-                        <span>${r.time || 'Az önce'}</span>
-                    </div>
-                    <p class="text-slate-800 dark:text-slate-200">${r.text}</p>
-                </div>
-            `).join('');
-        }
-
-        function handleAddReply(e) {
-            e.preventDefault();
-            const input = document.getElementById('newReplyInput');
-            const text = input.value.trim();
-            if (!text || !currentOpenThreadId) return;
-
-            const thread = forumThreads.find(t => t.id === currentOpenThreadId);
-            if (!thread) return;
-
-            if (!thread.replies) thread.replies = [];
-            const currentUser = localStorage.getItem('togg_user_name') || 'Siz (Togg Kullanıcısı)';
-            thread.replies.push({ author: currentUser, text: text, time: 'Şimdi' });
-
-            saveForumData();
-            renderModalReplies(thread.replies);
-            renderForumThreads();
-            input.value = '';
-        }
-
-        function handleCreateThread(e) {
-            e.preventDefault();
-            const cat = document.getElementById('newThreadCategory').value;
-            const title = document.getElementById('newThreadTitle').value.trim();
-            const body = document.getElementById('newThreadBody').value.trim();
-            const currentUser = localStorage.getItem('togg_user_name') || 'Siz (Togg Sahibi)';
-
-            const newThread = {
-                id: Date.now(),
-                category: cat,
-                title: title,
-                author: currentUser,
-                badge: "T10X Kullanıcısı",
-                body: body,
-                likes: 1,
-                views: "1",
-                icon: cat === 'menzil' ? 'fa-bolt' : (cat === 'yazilim' ? 'fa-code-branch' : 'fa-wrench'),
-                replies: []
-            };
-
-            forumThreads.unshift(newThread);
-            saveForumData();
-            renderForumThreads();
-            closeNewThreadModal();
-            e.target.reset();
-            alert('Konunuz başarıyla forumda yayınlandı!');
-        }
-
-        function likeThread(id) {
-            const thread = forumThreads.find(t => t.id === id);
-            if (thread) {
-                thread.likes++;
-                saveForumData();
-                renderForumThreads();
-            }
-        }
-
-        function filterForumCategory(cat) {
-            currentFilter = cat;
-            document.querySelectorAll('.forum-cat-btn').forEach(b => b.classList.remove('bg-brand', 'text-white'));
-            event.target.classList.add('bg-brand', 'text-white');
-
-            if (cat === 'all') renderForumThreads(forumThreads);
-            else renderForumThreads(forumThreads.filter(t => t.category === cat));
-        }
-
-        function searchForum() {
-            const query = document.getElementById('forumSearch').value.toLowerCase();
-            const filtered = forumThreads.filter(t => 
-                t.title.toLowerCase().includes(query) || 
-                t.body.toLowerCase().includes(query) ||
-                t.category.toLowerCase().includes(query)
-            );
-            renderForumThreads(filtered);
-        }
-
-        function openNewThreadModal() { document.getElementById('newThreadModal').classList.remove('hidden'); }
-        function closeNewThreadModal() { document.getElementById('newThreadModal').classList.add('hidden'); }
-        function closeThreadDetailModal() { document.getElementById('threadDetailModal').classList.add('hidden'); currentOpenThreadId = null; }
-        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
-        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
-
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('userEmail').value;
-            const name = email.split('@')[0];
-            localStorage.setItem('togg_user_name', name);
-            document.getElementById('authBtnText').innerText = name;
-            closeAuthModal();
-            alert(`Hoş geldiniz ${name}! Artık foruma konu açabilir ve yanıt yazabilirsiniz.`);
         }
 
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
+            localStorage.theme = isDark ? 'dark' : 'light';
             document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
 
-        window.onload = () => {
-            const savedUser = localStorage.getItem('togg_user_name');
-            if (savedUser) document.getElementById('authBtnText').innerText = savedUser;
-            loadForumData();
-        };
+        /* =========================================
+           AUTH SYSTEM
+        ========================================= */
+        function initAuth() {
+            const saved = localStorage.getItem('togg_user');
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                document.getElementById('authBtnText').innerText = currentUser.name;
+            }
+        }
+
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            if (currentUser) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('profileSection').classList.remove('hidden');
+                updateProfileView();
+            } else {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('profileSection').classList.add('hidden');
+            }
+        }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('userNameInput').value.trim();
+            const badge = document.getElementById('userBadgeInput').value;
+            
+            currentUser = {
+                name, badge, avatarBg: `avatar-bg-${Math.floor(Math.random()*5)+1}`,
+                stats: { threads: 0, replies: 0, likes: 0 }
+            };
+            localStorage.setItem('togg_user', JSON.stringify(currentUser));
+            document.getElementById('authBtnText').innerText = currentUser.name;
+            closeAuthModal();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('togg_user');
+            currentUser = null;
+            document.getElementById('authBtnText').innerText = 'Giriş Yap';
+            closeAuthModal();
+        }
+
+        function updateProfileView() {
+            if (!currentUser) return;
+            // Recalculate stats based on actual threads
+            let myThreads = threads.filter(t => t.author === currentUser.name);
+            let myReplies = 0;
+            let myLikes = 0;
+            
+            threads.forEach(t => {
+                if (t.author === currentUser.name) myLikes += t.likes;
+                t.replies.forEach(r => {
+                    if (r.author === currentUser.name) {
+                        myReplies++;
+                        myLikes += (r.likes || 0);
+                    }
+                });
+            });
+
+            document.getElementById('profileAvatar').innerText = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('profileAvatar').className = `w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-black shadow-lg ${currentUser.avatarBg}`;
+            document.getElementById('profileName').innerText = currentUser.name;
+            document.getElementById('profileBadge').innerText = currentUser.badge;
+            
+            document.getElementById('statThreads').innerText = myThreads.length;
+            document.getElementById('statReplies').innerText = myReplies;
+            document.getElementById('statLikes').innerText = myLikes;
+        }
+
+        /* =========================================
+           FORUM LOGIC
+        ========================================= */
+        function loadThreads() {
+            const saved = localStorage.getItem('togg_forum_threads');
+            if (saved) {
+                try { threads = JSON.parse(saved); } catch(e) { threads = [...initialThreads]; }
+            } else {
+                threads = [...initialThreads];
+                saveThreads();
+            }
+            renderThreads();
+        }
+
+        function saveThreads() {
+            localStorage.setItem('togg_forum_threads', JSON.stringify(threads));
+        }
+
+        function getAvatarClass(author) {
+            // Pseudo-random consistent color based on string length
+            const index = (author.length % 5) + 1;
+            return `avatar-bg-${index}`;
+        }
+
+        function renderThreads(data = null) {
+            let list = data || threads;
+            
+            // Filter
+            if (currentFilter !== 'all') {
+                list = list.filter(t => t.category === currentFilter);
+            }
+            
+            // Search
+            const q = document.getElementById('forumSearch').value.toLowerCase();
+            if (q) {
+                list = list.filter(t => t.title.toLowerCase().includes(q) || t.body.toLowerCase().includes(q));
+            }
+
+            // Sort
+            list = [...list].sort((a, b) => {
+                if (currentSort === 'newest') return b.id - a.id;
+                if (currentSort === 'mostLiked') return b.likes - a.likes;
+                if (currentSort === 'mostReplied') return b.replies.length - a.replies.length;
+                return 0;
+            });
+
+            const container = document.getElementById('forumList');
+            if (list.length === 0) {
+                container.innerHTML = `<div class="p-12 text-center text-slate-500 text-sm">Konu bulunamadı.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(t => {
+                const avClass = currentUser && currentUser.name === t.author ? currentUser.avatarBg : getAvatarClass(t.author);
+                const isLiked = isThreadLiked(t.id);
+                
+                return `
+                <div class="p-4 sm:p-5 hover:bg-slate-50 dark:hover:bg-[#151926] transition flex flex-col sm:flex-row gap-4 forum-card cursor-pointer border-l-2 border-transparent hover:border-brand" onclick="openThreadDetail(${t.id})">
+                    <!-- Avatar -->
+                    <div class="hidden sm:flex w-12 h-12 rounded-full items-center justify-center text-white font-black flex-shrink-0 ${avClass} shadow-sm">
+                        ${t.author.charAt(0).toUpperCase()}
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500">${t.category}</span>
+                            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white truncate">${t.title}</h4>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 line-clamp-2 mb-2">${t.body}</p>
+                        <div class="flex items-center gap-2 text-[10px] sm:text-xs">
+                            <span class="font-bold text-slate-700 dark:text-slate-300 sm:hidden">${t.author}</span>
+                            <span class="hidden sm:inline font-bold text-slate-700 dark:text-slate-300">${t.author}</span>
+                            <span class="text-emerald-500 font-semibold">${t.badge}</span>
+                            <span class="text-slate-400">• ${t.date}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="flex items-center gap-4 sm:flex-col sm:justify-center sm:items-end flex-shrink-0 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-3 sm:pt-0 mt-3 sm:mt-0">
+                        <button onclick="event.stopPropagation(); toggleLikeFromList(${t.id})" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition ${isLiked ? 'bg-red-500/10 text-red-500' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-red-500'}">
+                            <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i> <span class="font-bold text-sm">${t.likes}</span>
+                        </button>
+                        <div class="flex items-center gap-3 text-slate-400 text-xs px-2">
+                            <span class="flex items-center gap-1"><i class="fa-regular fa-comment"></i> ${t.replies.length}</span>
+                            <span class="flex items-center gap-1 hidden sm:flex"><i class="fa-regular fa-eye"></i> ${t.views}</span>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function filterForumCategory(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.forum-cat-btn').forEach(btn => {
+                if (btn.innerText.trim() === cat || (cat === 'all' && btn.innerText.trim() === 'Tümü')) {
+                    btn.classList.add('bg-brand', 'text-white', 'shadow-sm');
+                    btn.classList.remove('bg-slate-100', 'dark:bg-darkCard', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-darkBorder');
+                } else {
+                    btn.classList.remove('bg-brand', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-slate-100', 'dark:bg-darkCard', 'text-slate-700', 'dark:text-slate-300', 'border', 'border-slate-200', 'dark:border-darkBorder');
+                }
+            });
+            renderThreads();
+        }
+
+        function sortForum() {
+            currentSort = document.getElementById('forumSort').value;
+            renderThreads();
+        }
+
+        function searchForum() {
+            renderThreads();
+        }
+
+        /* Modals */
+        function openNewThreadModal() {
+            if (!currentUser) return openAuthModal();
+            document.getElementById('newThreadModal').classList.remove('hidden');
+        }
+        function closeNewThreadModal() { document.getElementById('newThreadModal').classList.add('hidden'); }
+        
+        function openThreadDetail(id) {
+            const thread = threads.find(t => t.id === id);
+            if (!thread) return;
+            activeThreadId = id;
+            
+            // Increment view
+            thread.views++;
+            saveThreads();
+            renderThreads(); // Update list
+
+            document.getElementById('tdCategory').innerText = thread.category;
+            document.getElementById('tdTitle').innerText = thread.title;
+            document.getElementById('tdAuthor').innerText = thread.author;
+            document.getElementById('tdBadge').innerText = thread.badge;
+            document.getElementById('tdDate').innerText = thread.date;
+            document.getElementById('tdBody').innerText = thread.body;
+            document.getElementById('tdLikes').innerText = thread.likes;
+            document.getElementById('tdViews').innerText = thread.views;
+            
+            const avClass = currentUser && currentUser.name === thread.author ? currentUser.avatarBg : getAvatarClass(thread.author);
+            document.getElementById('tdAvatar').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-white font-black flex-shrink-0 shadow-sm ${avClass}`;
+            document.getElementById('tdAvatar').innerText = thread.author.charAt(0).toUpperCase();
+
+            updateLikeBtnVisual(id, 'tdLikeBtn');
+            renderReplies(thread.replies);
+            
+            document.getElementById('threadDetailModal').classList.remove('hidden');
+        }
+        function closeThreadDetailModal() { document.getElementById('threadDetailModal').classList.add('hidden'); activeThreadId = null; }
+
+        function renderReplies(replies) {
+            document.getElementById('tdReplyCount').innerText = replies.length;
+            const container = document.getElementById('tdRepliesList');
+            if (replies.length === 0) {
+                container.innerHTML = `<div class="text-center py-6 text-slate-500 text-sm">İlk yanıtı siz yazın!</div>`;
+                return;
+            }
+            container.innerHTML = replies.map(r => {
+                const avClass = currentUser && currentUser.name === r.author ? currentUser.avatarBg : getAvatarClass(r.author);
+                const isLiked = isReplyLiked(activeThreadId, r.id);
+                return `
+                <div class="flex gap-3 sm:gap-4 p-4 rounded-2xl bg-slate-50 dark:bg-[#090a0f] border border-slate-100 dark:border-slate-800 group">
+                    <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-black flex-shrink-0 ${avClass}">
+                        ${r.author.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-1 flex-wrap">
+                            <span class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">${r.author}</span>
+                            <span class="text-[9px] font-bold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">${r.badge || 'Üye'}</span>
+                            <span class="text-[10px] text-slate-400 ml-auto">${r.date}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">${r.text}</p>
+                        
+                        <div class="flex gap-4 mt-2">
+                            <button onclick="toggleReplyLike(${r.id})" class="text-[11px] font-semibold transition flex items-center gap-1 ${isLiked ? 'text-red-500' : 'text-slate-400 hover:text-red-500'}">
+                                <i class="${isLiked ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${r.likes || 0}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        /* ACTIONS */
+        function handleCreateThread(e) {
+            e.preventDefault();
+            if (!currentUser) return openAuthModal();
+            
+            const cat = document.getElementById('ntCategory').value;
+            const title = document.getElementById('ntTitle').value.trim();
+            const body = document.getElementById('ntBody').value.trim();
+            
+            const newThread = {
+                id: Date.now(),
+                category: cat,
+                title: title,
+                author: currentUser.name,
+                badge: currentUser.badge,
+                date: "Az önce",
+                body: body,
+                likes: 0,
+                views: 1,
+                replies: []
+            };
+            
+            threads.push(newThread);
+            saveThreads();
+            closeNewThreadModal();
+            e.target.reset();
+            renderThreads();
+            openThreadDetail(newThread.id);
+        }
+
+        function handleAddReply(e) {
+            e.preventDefault();
+            if (!currentUser) return openAuthModal();
+            if (!activeThreadId) return;
+
+            const input = document.getElementById('replyInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const thread = threads.find(t => t.id === activeThreadId);
+            const newReply = {
+                id: Date.now(),
+                author: currentUser.name,
+                badge: currentUser.badge,
+                date: "Az önce",
+                text: text,
+                likes: 0
+            };
+            
+            thread.replies.push(newReply);
+            saveThreads();
+            input.value = '';
+            renderReplies(thread.replies);
+            renderThreads(); // update counts
+        }
+
+        /* LIKES SYSTEM */
+        function getLikedThreads() {
+            return JSON.parse(localStorage.getItem('togg_liked_threads') || '[]');
+        }
+        function isThreadLiked(id) {
+            return getLikedThreads().includes(id);
+        }
+        function getLikedReplies() {
+            return JSON.parse(localStorage.getItem('togg_liked_replies') || '{}');
+        }
+        function isReplyLiked(threadId, replyId) {
+            const likes = getLikedReplies();
+            return likes[threadId] && likes[threadId].includes(replyId);
+        }
+
+        function toggleLikeFromList(id) {
+            if (!currentUser) return openAuthModal();
+            let liked = getLikedThreads();
+            const thread = threads.find(t => t.id === id);
+            
+            if (liked.includes(id)) {
+                liked = liked.filter(x => x !== id);
+                thread.likes = Math.max(0, thread.likes - 1);
+            } else {
+                liked.push(id);
+                thread.likes++;
+            }
+            
+            localStorage.setItem('togg_liked_threads', JSON.stringify(liked));
+            saveThreads();
+            renderThreads();
+        }
+
+        function toggleThreadLike() {
+            if (!currentUser) return openAuthModal();
+            if (!activeThreadId) return;
+            
+            let liked = getLikedThreads();
+            const thread = threads.find(t => t.id === activeThreadId);
+            
+            if (liked.includes(activeThreadId)) {
+                liked = liked.filter(x => x !== activeThreadId);
+                thread.likes = Math.max(0, thread.likes - 1);
+            } else {
+                liked.push(activeThreadId);
+                thread.likes++;
+            }
+            
+            localStorage.setItem('togg_liked_threads', JSON.stringify(liked));
+            saveThreads();
+            document.getElementById('tdLikes').innerText = thread.likes;
+            updateLikeBtnVisual(activeThreadId, 'tdLikeBtn');
+            renderThreads();
+        }
+
+        function updateLikeBtnVisual(id, btnId) {
+            const btn = document.getElementById(btnId);
+            const isLiked = isThreadLiked(id);
+            if (isLiked) {
+                btn.className = "flex items-center gap-1.5 font-bold transition px-3 py-1.5 rounded-lg bg-red-500/10 text-red-500";
+                btn.innerHTML = `<i class="fa-solid fa-heart"></i> <span id="tdLikes">${document.getElementById('tdLikes').innerText}</span>`;
+            } else {
+                btn.className = "flex items-center gap-1.5 font-semibold transition px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-red-500";
+                btn.innerHTML = `<i class="fa-regular fa-heart"></i> <span id="tdLikes">${document.getElementById('tdLikes').innerText}</span>`;
+            }
+        }
+
+        function toggleReplyLike(replyId) {
+            if (!currentUser) return openAuthModal();
+            
+            let likesDict = getLikedReplies();
+            if (!likesDict[activeThreadId]) likesDict[activeThreadId] = [];
+            
+            const thread = threads.find(t => t.id === activeThreadId);
+            const reply = thread.replies.find(r => r.id === replyId);
+            
+            if (likesDict[activeThreadId].includes(replyId)) {
+                likesDict[activeThreadId] = likesDict[activeThreadId].filter(x => x !== replyId);
+                reply.likes = Math.max(0, (reply.likes || 1) - 1);
+            } else {
+                likesDict[activeThreadId].push(replyId);
+                reply.likes = (reply.likes || 0) + 1;
+            }
+            
+            localStorage.setItem('togg_liked_replies', JSON.stringify(likesDict));
+            saveThreads();
+            renderReplies(thread.replies);
+        }
+
+        /* =========================================
+           SOH CERTIFICATE ENGINE
+        ========================================= */
+        function generateSohCertificate(e) {
+            e.preventDefault();
+            
+            const vin = document.getElementById('sohVin').value.toUpperCase();
+            const km = parseFloat(document.getElementById('sohKm').value);
+            const pack = parseFloat(document.getElementById('sohPack').value);
+            const dc = parseFloat(document.getElementById('sohDc').value);
+            const age = parseFloat(document.getElementById('sohAge').value);
+            
+            // Formula: SoH = 100 - (KM/20000)×1.2 - (DC_Count/500)×0.8 - (Age/10)×1.5
+            let soh = 100 - (km / 20000) * 1.2 - (dc / 500) * 0.8 - (age / 10) * 1.5;
+            if (soh > 100) soh = 100;
+            if (soh < 0) soh = 0;
+            
+            // Grade system
+            let grade = 'D';
+            let color = 'bg-red-500';
+            if (soh >= 95) { grade = 'A+'; color = 'bg-green-500'; }
+            else if (soh >= 90) { grade = 'A'; color = 'bg-emerald-500'; }
+            else if (soh >= 80) { grade = 'B'; color = 'bg-blue-500'; }
+            else if (soh >= 70) { grade = 'C'; color = 'bg-amber-500'; }
+
+            const usableKwh = pack * (soh / 100);
+            // Rough estimation: 88.5 kWh gives ~523 wltp -> ~5.9 km/kWh
+            const estRange = Math.round(usableKwh * (pack > 60 ? 5.9 : 5.8));
+            
+            // Generate pseudo-hash
+            const hash = "TGG-" + Math.abs(hashCode(vin + km + Date.now())).toString(16).toUpperCase() + "-" + new Date().getFullYear();
+
+            // Render
+            document.getElementById('certGrade').innerText = grade;
+            document.getElementById('certGrade').className = `inline-block px-3 py-1 text-white font-black rounded-lg text-lg shadow-lg ${color}`;
+            document.getElementById('certSoh').innerText = `%${soh.toFixed(1)}`;
+            document.getElementById('certSoh').className = `text-5xl font-black ${soh >= 90 ? 'text-brand' : (soh >= 80 ? 'text-blue-400' : 'text-amber-500')}`;
+            document.getElementById('certKwh').innerText = `${usableKwh.toFixed(1)} kWh`;
+            document.getElementById('certRange').innerText = `${estRange} km`;
+            document.getElementById('certHash').innerText = hash;
+            
+            document.getElementById('sohPlaceholder').classList.add('hidden');
+            document.getElementById('sohCertificateContainer').classList.remove('hidden');
+            
+            // Scroll to view
+            document.getElementById('sohCertificateContainer').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hashCode(str) {
+            let hash = 0;
+            for (let i = 0, len = str.length; i < len; i++) {
+                let chr = str.charCodeAt(i);
+                hash = (hash << 5) - hash + chr;
+                hash |= 0; 
+            }
+            return hash;
+        }
+
+        async function downloadPdf() {
+            const element = document.getElementById('sohCertificate');
+            const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#ffffff' });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdf = new jspdf.jsPDF('l', 'mm', 'a5');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('Togg_SoH_Sertifikasi.pdf');
+        }
+
+        async function shareCertificate() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Togg Batarya SoH Raporum',
+                        text: `Togg aracımın tahmini batarya sağlığı (SoH) %${document.getElementById('certSoh').innerText.replace('%','')} olarak hesaplandı! Sen de ToggElectric üzerinden hesapla.`,
+                        url: 'https://toggelectric.com/#soh-sertifika'
+                    });
+                } catch (err) {
+                    console.log('Paylaşım iptal edildi veya desteklenmiyor.');
+                }
+            } else {
+                alert('Web Share API tarayıcınızda desteklenmiyor.');
+            }
+        }
     </script>
 </body>
 </html>
