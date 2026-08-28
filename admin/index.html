@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToggElectric Enterprise Admin Panel</title>
+    <meta name="robots" content="noindex, nofollow">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050811; color: #f1f5f9; }
+        .glass-card { background: rgba(12, 18, 34, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .btn-neon { background: linear-gradient(135deg, #00e5ff 0%, #3b82f6 100%); box-shadow: 0 0 25px rgba(0, 229, 255, 0.35); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-4 sm:p-8">
+
+    <div id="loginScreen" class="flex-grow flex items-center justify-center">
+        <div class="glass-card max-w-md w-full p-8 rounded-3xl border border-cyan-500/40 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-400 flex items-center justify-center mx-auto mb-3 text-cyan-400 text-2xl">
+                    <i class="fa-solid fa-newspaper"></i>
+                </div>
+                <h2 class="text-2xl font-black text-white">ToggElectric Admin</h2>
+                <p class="text-xs text-slate-400 mt-1">Forum Moderasyonu & SoH Veritabanı Portalı</p>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Kullanıcı Adı</label>
+                    <input type="text" id="user" required placeholder="Kullanıcı adı" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Şifre</label>
+                    <input type="password" id="pass" required placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                </div>
+                <button type="submit" class="w-full btn-neon text-slate-950 font-black py-3.5 rounded-xl text-xs uppercase">
+                    Giriş Yap
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboardScreen" class="hidden flex-col max-w-6xl w-full mx-auto space-y-6">
+        <div class="glass-card p-6 rounded-3xl flex justify-between items-center border border-cyan-500/30">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-xl">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-white flex items-center gap-2">
+                        ToggElectric Enterprise Admin Panel
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">musa</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Forum Denetimi, SoH Batarya Ekspertizleri & Günlük SEO Botu</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="alert('Günlük Otonom SEO Botu tetiklendi. Sitemap.xml ve haber akışı güncelleniyor...')" class="bg-cyan-500/20 text-cyan-300 px-3.5 py-2 rounded-xl text-xs font-bold">SEO Botunu Tetikle</button>
+                <a href="/" class="bg-white/10 hover:bg-white/20 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition">Siteye Dön</a>
+                <button onclick="logout()" class="bg-rose-500/20 text-rose-400 px-3.5 py-2 rounded-xl text-xs font-bold">Çıkış Yap</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="glass-card p-5 rounded-2xl">
+                <span class="text-[10px] text-slate-400 font-bold uppercase">Toplam Üye</span>
+                <div class="text-2xl font-black text-cyan-400 mt-1">26.850+</div>
+                <span class="text-[9px] text-emerald-400 font-semibold">Aktif Topluluk</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl">
+                <span class="text-[10px] text-slate-400 font-bold uppercase">Doğrulanmış SoH Raporu</span>
+                <div class="text-2xl font-black text-white mt-1">4.320+</div>
+                <span class="text-[9px] text-cyan-400 font-semibold">SHA-256 İmzalı</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl">
+                <span class="text-[10px] text-slate-400 font-bold uppercase">Forum Konuları</span>
+                <div class="text-2xl font-black text-emerald-400 mt-1">9.680+</div>
+                <span class="text-[9px] text-slate-400">Modere Edildi</span>
+            </div>
+            <div class="glass-card p-5 rounded-2xl">
+                <span class="text-[10px] text-slate-400 font-bold uppercase">Günlük Organik Trafik</span>
+                <div class="text-2xl font-black text-amber-400 mt-1">12.400 / gün</div>
+                <span class="text-[9px] text-emerald-400 font-semibold">Google News 1. Sıra</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAuth() {
+            if(localStorage.getItem('ecosystem_admin_auth') === 'authenticated') {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('dashboardScreen').classList.remove('hidden');
+                document.getElementById('dashboardScreen').classList.add('flex');
+            }
+        }
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('user').value.trim();
+            const p = document.getElementById('pass').value.trim();
+            if(u === 'musa' && p === 'Fatma6872') {
+                localStorage.setItem('ecosystem_admin_auth', 'authenticated');
+                checkAuth();
+            } else {
+                alert('Hatalı kullanıcı adı veya şifre!');
+            }
+        }
+        function logout() {
+            localStorage.removeItem('ecosystem_admin_auth');
+            location.reload();
+        }
+        checkAuth();
+    </script>
+</body>
+</html>
