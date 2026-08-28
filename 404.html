@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Sayfa Bulunamadi | toggelectric.com</title>
+<meta name="robots" content="noindex, nofollow">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#050811;min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0;overflow:hidden}
+.glow{text-shadow:0 0 40px rgba(16,185,129,.4),0 0 80px rgba(16,185,129,.2)}
+.glass{background:rgba(255,255,255,.03);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:24px}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+.particle{position:absolute;border-radius:50%;background:rgba(16,185,129,.15);animation:drift 8s infinite}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1);opacity:.3}50%{transform:translate(30px,-40px) scale(1.5);opacity:.6}}
+</style>
+</head>
+<body>
+<div class="particle" style="width:200px;height:200px;top:10%;left:5%;animation-delay:0s"></div>
+<div class="particle" style="width:150px;height:150px;top:60%;right:10%;animation-delay:2s"></div>
+<div class="particle" style="width:100px;height:100px;bottom:20%;left:40%;animation-delay:4s"></div>
+<div class="glass p-12 md:p-16 text-center max-w-lg mx-4 relative z-10">
+<div class="float mb-8">
+<i class="fas fa-bolt text-6xl text-emerald-400 mb-4 block"></i>
+</div>
+<h1 class="text-8xl font-black text-white glow mb-4">404</h1>
+<p class="text-xl text-gray-300 mb-2">Sayfa Bulunamadi</p>
+<p class="text-gray-500 mb-8">Aradiginiz sayfa tasinmis, kaldirilmis veya hic var olmamis olabilir.</p>
+<a href="/" class="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold px-8 py-4 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25">
+<i class="fas fa-home"></i> Ana Sayfaya Don
+</a>
+<div class="mt-8 flex justify-center gap-6">
+<a href="https://chargetogg.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-charging-station mr-1"></i>ChargeTogg</a>
+<a href="https://servicetogg.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-wrench mr-1"></i>ServiceTogg</a>
+<a href="https://toggelectric.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-car mr-1"></i>ToggElectric</a>
+</div>
+</div>
+</body>
+</html>
