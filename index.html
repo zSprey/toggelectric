@@ -776,7 +776,19 @@
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-[#03050a] border-t border-white/5 py-12 mt-auto no-print">
+    <!-- NEWSLETTER SUBSCRIPTION -->
+<div id="newsletter-form" class="max-w-2xl mx-auto mt-12 mb-8 px-4">
+<div style="background:rgba(255,255,255,.03);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:2rem;text-align:center">
+<h3 class="text-xl font-bold text-white mb-2"><i class="fas fa-envelope-open-text text-emerald-400 mr-2"></i>Bultenimize Abone Olun</h3>
+<p class="text-gray-400 text-sm mb-4">EV dunyasindan en son gelismeler, firsatlar ve guncellemeler</p>
+<div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+<input type="email" id="nlEmail" placeholder="e-posta@adresiniz.com" class="flex-1 bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white focus:border-emerald-500 focus:outline-none text-sm">
+<button onclick="document.getElementById('nlEmail').value?((document.getElementById('nlMsg').textContent='Basariyla abone oldunuz!'),document.getElementById('nlMsg').classList.remove('hidden')):0" class="bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl hover:scale-105 transition-all text-sm whitespace-nowrap">Abone Ol</button>
+</div>
+<p id="nlMsg" class="hidden text-emerald-400 text-sm mt-3 font-semibold"></p>
+</div>
+</div>
+<footer class="bg-[#03050a] border-t border-white/5 py-12 mt-auto no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center space-y-4">
             <div class="text-xl font-black text-white">Togg<span class="text-gradient">Electric</span></div>
             <p class="text-xs text-slate-500 max-w-md mx-auto">
