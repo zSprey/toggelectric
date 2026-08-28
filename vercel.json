@@ -1,61 +1,26 @@
 {
-    "cleanUrls":  true,
-    "trailingSlash":  false,
-    "rewrites":  [
-                     {
-                         "source":  "/blog",
-                         "destination":  "/blog.html"
-                     },
-                     {
-                         "source":  "/admin",
-                         "destination":  "/admin.html"
-                     },
-                     {
-                         "source":  "/widget",
-                         "destination":  "/widget.html"
-                     },
-                     {
-                         "source":  "/qr-stand",
-                         "destination":  "/qr-stand.html"
-                     },
-                     {
-                         "source":  "/wallbox-rehberi",
-                         "destination":  "/wallbox-rehberi.html"
-                     },
-                     {
-                         "source":  "/api/tariffs.json",
-                         "destination":  "/api/tariffs.json"
-                     }
-                 ],
-    "headers":  [
-                    {
-                        "source":  "/(.*)",
-                        "headers":  [
-                                        {
-                                            "key":  "X-Content-Type-Options",
-                                            "value":  "nosniff"
-                                        },
-                                        {
-                                            "key":  "X-Frame-Options",
-                                            "value":  "SAMEORIGIN"
-                                        },
-                                        {
-                                            "key":  "X-XSS-Protection",
-                                            "value":  "1; mode=block"
-                                        },
-                                        {
-                                            "key":  "Referrer-Policy",
-                                            "value":  "strict-origin-when-cross-origin"
-                                        },
-                                        {
-                                            "key":  "Permissions-Policy",
-                                            "value":  "camera=(), microphone=(), geolocation=(self)"
-                                        },
-                                        {
-                                            "key":  "Strict-Transport-Security",
-                                            "value":  "max-age=63072000; includeSubDomains; preload"
-                                        }
-                                    ]
-                    }
-                ]
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/wallbox-rehberi", "destination": "/wallbox-rehberi.html" },
+    { "source": "/batarya-pasaportu", "destination": "/batarya-pasaportu.html" },
+    { "source": "/menzil-simulasyonu", "destination": "/menzil-simulasyonu.html" },
+    { "source": "/widget", "destination": "/widget.html" },
+    { "source": "/qr-stand", "destination": "/qr-stand.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(self)" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
+      ]
+    }
+  ]
 }
