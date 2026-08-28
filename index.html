@@ -138,7 +138,7 @@
     <header class="sticky top-0 z-50 glass-header no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3">
-<button onclick="openAdminLogin()" title="Yönetici Girişi" class="bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-mono transition flex items-center gap-1 border border-white/10"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Admin</button>
+
                 <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand via-blue-500 to-accent flex items-center justify-center text-slate-950 font-black shadow-lg shadow-blue-500/30">
                     <i class="fa-solid fa-bolt text-xl text-white"></i>
                 </div>
@@ -159,7 +159,7 @@
             </nav>
 
             <div class="flex items-center gap-3">
-<button onclick="openAdminLogin()" title="Yönetici Girişi" class="bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg text-xs font-mono transition flex items-center gap-1 border border-white/10"><i class="fa-solid fa-shield-halved text-cyan-400"></i> Admin</button>
+
                 <button onclick="openNewThreadModal()" class="bg-gradient-to-r from-brand to-accent hover:opacity-90 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition">
                     <i class="fa-solid fa-plus"></i> Konu Aç
                 </button>
@@ -1096,5 +1096,12 @@
     function triggerDailySeoBot() {
         alert("Günlük Otonom SEO Botu tetiklendi. Sitemap.xml ve yeni haber akışı güncelleniyor...");
     }</script>
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash === '#admin' || window.location.search.includes('admin')) {
+          if (typeof openAdminLogin === 'function') openAdminLogin();
+        }
+      });
+    </script>
 </body>
 </html>
