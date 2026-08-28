@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Togg T10X Ev Tipi Wallbox Şarj İstasyonu Kurulum Rehberi 2026 | ToggElectric</title>
+    <meta name="description" content="Togg T10X evde şarj için Wallbox kurulum rehberi: 7.4kW, 11kW, 22kW tipleri, 2026 apartman yönetmeliği (çoğunluk şartı kalktı), maliyet kırılımı, marka önerileri ve güneş enerjisi entegrasyonu.">
+    <meta name="keywords" content="togg wallbox kurulumu, evde togg şarj etme, wallbox maliyeti 2026, apartman otoparkı şarj istasyonu yönetmeliği, vestel wallbox, abb terra ac togg">
+    <link rel="canonical" href="https://toggelectric.com/wallbox-rehberi.html">
+
+    <!-- OpenGraph & Twitter Cards -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://toggelectric.com/wallbox-rehberi.html">
+    <meta property="og:title" content="Togg T10X Ev Tipi Wallbox Kurulum Rehberi 2026">
+    <meta property="og:description" content="Apartmanda veya müstakil evde Togg şarj istasyonu kurulumu, 2026 Kat Mülkiyeti yönetmeliği, maliyetler ve marka karşılaştırması.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org HowTo & FAQPage JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "HowTo",
+          "name": "Apartman Otoparkına Togg Wallbox Şarj İstasyonu Nasıl Kurulur?",
+          "description": "2026 güncel mevzuatına göre apartman ortak otoparkında şarj ünitesi kurulum adımları.",
+          "step": [
+            { "@type": "HowToStep", "name": "Yönetime Bildirim & Dilekçe", "text": "2026 yönetmeliği uyarınca 4/5 çoğunluk aranmaksızın site yönetimine yazılı bilgilendirme dilekçesi verilir." },
+            { "@type": "HowToStep", "name": "Elektrik Projesi & Keşif", "text": "Yetkili elektrik mühendisi tarafından ana pano kapasitesi ve kablolama güzergahı projelendirilir." },
+            { "@type": "HowToStep", "name": "Ayrı Sayaç & Dağıtım Başvurusu", "text": "Elektrik dağıtım şirketine (BEDAŞ, AYEDAŞ, Başkent EDAŞ vb.) bağımsız şarj sayacı başvurusu yapılır." },
+            { "@type": "HowToStep", "name": "Tip B Kaçak Akım & Montaj", "text": "Yangın ve elektrik güvenliği için Tip B kaçak akım rölesi ve uygun kesitli bakır kablo ile montaj tamamlanır." },
+            { "@type": "HowToStep", "name": "Test & Onay", "text": "Topraklama ölçümü ve şarj testleri yapılarak sistem devreye alınır." }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Apartmanda şarj istasyonu kurmak için komşulardan izin almak zorunlu mu?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 Kat Mülkiyeti Kanunu ve EPDK şarj yönetmeliği güncellemesiyle, bağımsız bölüm maliklerinin tahsisli veya açık park yerlerinde şarj ünitesi kurması için 4/5 oy çokluğu şartı kaldırılmıştır; can ve mal güvenliği projesi sunularak bildirim usulüyle kurulabilmektedir."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Togg T10X evde ne kadar sürede şarj olur?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "11 kW trifaze AC Wallbox ile Togg T10X Uzun Menzil (88.5 kWh) bataryası yaklaşık 7.5 - 8 saatte (%10'dan %100'e) gece uykudayken tamamen dolar."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Tailwind & Custom Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#070a12',
+                        darker: '#03050a',
+                        brand: '#00e5ff',
+                        accent: '#00f2fe',
+                        emeraldPulse: '#10b981',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #070a12; color: #f1f5f9; overflow-x: hidden; }
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.5rem; }
+        .glass-card { background: rgba(18, 26, 46, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.3s ease; }
+        .glass-card:hover { transform: translateY(-4px); border-color: rgba(0, 229, 255, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 25px rgba(0, 229, 255, 0.2); }
+        .nav-link { transition: color 0.3s; }
+        .nav-link:hover { color: #00e5ff; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #070a12; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 229, 255, 0.5); }
+    </style>
+</head>
+<body class="bg-dark text-slate-100 min-h-screen flex flex-col selection:bg-brand selection:text-slate-950">
+
+    <!-- Top Ecosystem Header Bar -->
+    <div class="bg-[#03050a] border-b border-white/5 py-1.5 px-4 text-[11px] font-bold text-slate-400">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mr-1 animate-ping"></span> WALLBOX REHBERİ
+                </span>
+                <span class="hidden sm:inline text-slate-500">Togg Connected Mobility Ekosistemi</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="https://chargetogg.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-bolt"></i> ChargeTogg</a>
+                <a href="https://servicetogg.com" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-wrench"></i> ServiceTogg</a>
+                <a href="/" class="text-cyan-400 flex items-center gap-1 font-extrabold"><i class="fa-solid fa-comments"></i> ToggElectric</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel !rounded-none !border-x-0 !border-t-0 border-b border-white/10 bg-[#070a12]/90 backdrop-blur-xl px-4 sm:px-6 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-500 via-teal-400 to-emerald-400 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-bolt text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                        Togg<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">Electric</span>
+                        <span class="text-[9px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 px-1.5 py-0.5 rounded ml-1">REHBER</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-400">EV HABERLERİ, SOH & TOPLULUK</span>
+                </div>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-7 text-sm font-semibold text-slate-300">
+                <a href="/" class="nav-link">Ana Sayfa</a>
+                <a href="/wallbox-rehberi.html" class="text-cyan-400 font-bold border-b-2 border-cyan-400 pb-1 flex items-center gap-1.5"><i class="fa-solid fa-charging-station text-cyan-400"></i> Wallbox Rehberi</a>
+                <a href="/#ikinci-el-deger" class="nav-link">İkinci El Değer</a>
+                <a href="/#soh" class="nav-link">SoH Sertifikası</a>
+                <a href="/#forum" class="nav-link">Topluluk Forumu</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://chargetogg.com/#harita" class="bg-gradient-to-r from-cyan-500 to-emerald-400 hover:opacity-95 text-slate-950 font-black text-xs px-4 py-2.5 rounded-xl shadow-lg shadow-cyan-500/20 flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-map-location-dot"></i> Şarj Haritası
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section class="relative py-16 sm:py-24 px-4 sm:px-6 max-w-7xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-black uppercase tracking-wider mb-6">
+                <i class="fa-solid fa-house-laptop"></i> 2026 Kapsamlı Evde Şarj Kılavuzu
+            </div>
+            <h1 class="text-3xl sm:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
+                Togg T10X Ev Tipi Wallbox <br class="hidden sm:inline">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">Kurulum, Mevzuat ve Maliyet Rehberi</span>
+            </h1>
+            <p class="text-slate-400 text-sm sm:text-lg mt-6 max-w-3xl mx-auto leading-relaxed">
+                2026 Kat Mülkiyeti Kanunu düzenlemesiyle apartmanlarda <strong>4/5 çoğunluk şartı kaldırıldı</strong>. 7.4kW, 11kW ve 22kW Wallbox tipleri, güncel cihaz/montaj maliyetleri ve güneş enerjisi (GES) entegrasyonunu keşfedin.
+            </p>
+
+            <!-- Quick Metrics Header -->
+            <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto text-left">
+                <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div class="text-slate-400 text-xs font-bold mb-1"><i class="fa-solid fa-bolt text-cyan-400 mr-1"></i> Önerilen Güç</div>
+                    <div class="text-2xl font-black text-cyan-400">11 kW Trifaze</div>
+                    <div class="text-[11px] text-slate-500 mt-1">16A 3 Faz Tam Uyum</div>
+                </div>
+                <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div class="text-slate-400 text-xs font-bold mb-1"><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Evde Şarj Süresi</div>
+                    <div class="text-2xl font-black text-white">7.5 - 8 Saat</div>
+                    <div class="text-[11px] text-slate-500 mt-1">%10 ➔ %100 Gece Şarjı</div>
+                </div>
+                <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div class="text-slate-400 text-xs font-bold mb-1"><i class="fa-solid fa-coins text-emerald-400 mr-1"></i> Gece Tarifesi (AC)</div>
+                    <div class="text-2xl font-black text-emerald-400">~2.60 ₺ <span class="text-xs text-slate-400 font-normal">/ kWh</span></div>
+                    <div class="text-[11px] text-slate-500 mt-1">Tam Depo Sadece ~₺230</div>
+                </div>
+                <div class="p-5 rounded-2xl bg-white/[0.03] border border-white/10">
+                    <div class="text-slate-400 text-xs font-bold mb-1"><i class="fa-solid fa-scale-balanced text-purple-400 mr-1"></i> 2026 Mevzuatı</div>
+                    <div class="text-2xl font-black text-purple-300">Bildirim Usulü</div>
+                    <div class="text-[11px] text-slate-500 mt-1">Çoğunluk Şartı Yok</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WALLBOX TYPES COMPARISON SECTION -->
+        <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Doğru Gücü Seçin</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">
+                    Wallbox Güç Tipleri ve Togg T10X Uyumluluğu
+                </h2>
+                <p class="text-slate-400 text-xs sm:text-sm mt-2">
+                    Togg T10X'in dahili AC On-Board Charger (OBC) ünitesi standart olarak <strong>11 kW (Trifaze)</strong> veya opsiyonel olarak <strong>22 kW</strong> destekler.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Type 1: 7.4 kW Monofaze -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-white/10">Monofaze (Tek Faz)</span>
+                            <span class="text-xs font-mono text-cyan-400 font-bold">32 Amper</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">7.4 kW Wallbox</h3>
+                        <div class="text-lg font-black text-slate-300 my-2 font-mono">11 - 12 Saat <span class="text-xs text-slate-400 font-normal">şarj süresi</span></div>
+                        <p class="text-slate-400 text-xs leading-relaxed mt-3">
+                            Müstakil evlerde veya altyapısında sadece tek faz (monofaze) bulunan eski binalar için uygundur. Gece boyu şarj ile günlük menzil ihtiyacını karşılar.
+                        </p>
+                        <div class="mt-6 space-y-2 text-xs text-slate-300 border-t border-white/10 pt-4">
+                            <div>• Kablo Kesiti: <strong>3x6 mm²</strong></div>
+                            <div>• Sigorta: <strong>1x40A Tip B Kaçak Akım</strong></div>
+                            <div>• Togg T10X AC Giriş: <strong>Maks. 7.4 kW çeker</strong></div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-slate-400">
+                        Cihaz Maliyeti: <strong class="text-white font-mono">8.000 ₺ – 14.000 ₺</strong>
+                    </div>
+                </div>
+
+                <!-- Type 2: 11 kW Trifaze (ÖNERİLEN) -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between border-2 border-cyan-400 relative shadow-2xl shadow-cyan-950/40 bg-gradient-to-b from-[#101b33] to-[#070a12]">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                        Togg İçin En İdeal
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Trifaze (3 Faz)</span>
+                            <span class="text-xs font-mono text-cyan-400 font-bold">16 Amper x 3</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">11 kW Wallbox</h3>
+                        <div class="text-lg font-black text-cyan-300 my-2 font-mono">7.5 - 8 Saat <span class="text-xs text-slate-400 font-normal">şarj süresi</span></div>
+                        <p class="text-slate-300 text-xs leading-relaxed mt-3">
+                            Togg T10X dahili şarj ünitesiyle (11 kW OBC) birebir %100 örtüşen standarttır. Şebekeyi zorlamaz, kablo ısınması minimumdur.
+                        </p>
+                        <div class="mt-6 space-y-2 text-xs text-slate-200 border-t border-white/10 pt-4">
+                            <div>• Kablo Kesiti: <strong>5x4 mm² / 5x6 mm²</strong></div>
+                            <div>• Sigorta: <strong>3x20A Tip B Kaçak Akım</strong></div>
+                            <div>• Togg T10X 88.5 kWh: <strong>Sıfırdan tam dolum 8 saat</strong></div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-slate-300">
+                        Cihaz Maliyeti: <strong class="text-cyan-400 font-mono">14.000 ₺ – 20.000 ₺</strong>
+                    </div>
+                </div>
+
+                <!-- Type 3: 22 kW Trifaze -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-white/10">Trifaze Yüksek Güç</span>
+                            <span class="text-xs font-mono text-cyan-400 font-bold">32 Amper x 3</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-white">22 kW Wallbox</h3>
+                        <div class="text-lg font-black text-slate-300 my-2 font-mono">4.5 Saat <span class="text-xs text-slate-400 font-normal">(22kW OBC ile)</span></div>
+                        <p class="text-slate-400 text-xs leading-relaxed mt-3">
+                            Geleceğe yatırım ve ticari otoparklar için ideal güç. T10X 22kW opsiyonlu araçlarda tam hızda şarj sağlar (11kW araçlar 11kW çeker).
+                        </p>
+                        <div class="mt-6 space-y-2 text-xs text-slate-300 border-t border-white/10 pt-4">
+                            <div>• Kablo Kesiti: <strong>5x10 mm²</strong></div>
+                            <div>• Sigorta: <strong>3x40A Tip B Kaçak Akım</strong></div>
+                            <div>• Yüksek ana pano gücü gerektirir</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 text-xs text-slate-400">
+                        Cihaz Maliyeti: <strong class="text-white font-mono">20.000 ₺ – 28.000 ₺</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOTAL INSTALLATION COST BREAKDOWN SECTION -->
+        <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="rounded-3xl bg-gradient-to-b from-[#121a2e] to-[#070a12] border border-cyan-500/20 p-6 sm:p-10 shadow-2xl">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-6 border-b border-white/10 gap-4">
+                    <div>
+                        <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Şeffaf Maliyet Analizi</span>
+                        <h2 class="text-2xl sm:text-3xl font-black text-white mt-1">
+                            Evde Wallbox Kurulumu Toplam Bütçesi: <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">15.000 ₺ – 41.000 ₺</span>
+                        </h2>
+                    </div>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">
+                        Ağustos 2026 Piyasa Fiyatları
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-box"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white">1. Wallbox Cihazı</h3>
+                        <div class="text-2xl font-black text-cyan-300 my-2 font-mono">8.000 ₺ – 25.000 ₺</div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Marka, güç (7.4-22kW), RFID kart okuyucu, Wi-Fi / Mobil uygulama ve dinamik yük dengeleme özelliklerine göre değişir.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white">2. Montaj & Kablolama</h3>
+                        <div class="text-2xl font-black text-amber-300 my-2 font-mono">5.000 ₺ – 12.000 ₺</div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Panodan otoparka olan mesafe (bakır kablo metresi), borulama, Tip B kaçak akım koruma şalteri ve işçilik bedeli.
+                        </p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid fa-file-contract"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-white">3. Sayaç & Dağıtım Onayı</h3>
+                        <div class="text-2xl font-black text-purple-300 my-2 font-mono">2.000 ₺ – 4.000 ₺</div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Elektrik dağıtım şirketi onaylı mühendislik projesi, bağımsız çift zamanlı süzme sayaç veya ayrı abone sayacı harçları.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2026 LEGAL REGULATION & APARTMENT STEPS -->
+        <section class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Legal Info (5 cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-black uppercase">
+                        <i class="fa-solid fa-scale-balanced"></i> 2026 Güncel Mevzuatı
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                        Apartmanda 4/5 Çoğunluk Şartı Kaldırıldı!
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        Kat Mülkiyeti Kanunu ve Çevre, Şehircilik ve İklim Değişikliği Bakanlığı 2026 genelgesine göre, bağımsız bölüm maliklerinin otoparkta şarj ünitesi kurması "lüks yenilik" değil, <strong>temel altyapı hakkı</strong> sayılmıştır.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 space-y-2">
+                        <div class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> Komşu Onayı Gerekmez</div>
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            Mühendis onaylı güvenlik projesi ve dağıtım şirketine ayrı sayaç başvurusu yapılarak site yönetimine sadece yazılı bildirimde bulunmak yeterlidir.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 5 Steps Flow (7 cols) -->
+                <div class="lg:col-span-7 space-y-3">
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">1</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Yönetime Yazılı Bildirim Dilekçesi</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Otoparktaki araç alanınıza şarj ünitesi kurulacağına dair yönetim kuruluna dilekçe sunulur.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">2</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Elektrik Mühendisliği Keşfi & Proje</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Bina ana panosunun güç kapasitesi ölçülür ve yangın güvenli kablo rotası projelendirilir.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">3</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Ayrı Sayaç veya Daire Sayacına Bağlantı</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Dairenizin kendi sayacından kablo çekilir veya ortak panoda bağımsız süzme sayaç tahsis edilir.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-400 font-mono font-bold flex items-center justify-center shrink-0">4</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Yetkili Montaj & Tip B Kaçak Akım</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">DC kaçak akımlara karşı Tip B kaçak akım koruma şalteri takılarak Wallbox duvara monte edilir.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex items-start gap-4">
+                        <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0">5</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Topraklama Ölçümü & Devreye Alma</h4>
+                            <p class="text-xs text-slate-400 mt-0.5">Topraklama direnci (max 2 ohm) test edilir, Togg T10X ile ilk şarj testi yapılarak onaylanır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOP RECOMMENDED WALLBOX BRANDS -->
+        <section class="py-12 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-xs font-black uppercase text-cyan-400 tracking-wider">Güvenilir Donanımlar</span>
+                <h2 class="text-2xl sm:text-4xl font-black text-white mt-1">
+                    Togg T10X Uyumlu Önerilen Wallbox Markaları
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- ABB -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-cyan-400 uppercase mb-1">İsviçre / Global</div>
+                        <h3 class="text-lg font-black text-white">ABB Terra AC</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            En yüksek endüstriyel güvenlik standardı. Dahili Tip B koruma, RFID kart, Bluetooth & Wi-Fi TerraConfig uygulaması.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">11kW / 22kW</span>
+                        <span class="font-bold text-white font-mono">₺18.500</span>
+                    </div>
+                </div>
+
+                <!-- Schneider -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-emerald-400 uppercase mb-1">Fransa / Global</div>
+                        <h3 class="text-lg font-black text-white">Schneider EVlink</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Kompakt ve zarif tasarım. Akıllı dinamik yük yönetimi sayesinde evdeki beyaz eşyalar çalışırken gücü otomatik dengeler.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">11kW / 22kW</span>
+                        <span class="font-bold text-white font-mono">₺21.000</span>
+                    </div>
+                </div>
+
+                <!-- Vestel -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-rose-400 uppercase mb-1">Yerli Üretim</div>
+                        <h3 class="text-lg font-black text-white">Vestel EVC04</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Türkiye genelinde yaygın Vestel yetkili servis ve montaj garantisi. Uygun fiyat/performans ve Drive Green mobil kontrolü.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">7.4kW / 11kW / 22kW</span>
+                        <span class="font-bold text-white font-mono">₺13.500</span>
+                    </div>
+                </div>
+
+                <!-- KEBA -->
+                <div class="glass-card rounded-3xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="text-xs font-bold text-purple-400 uppercase mb-1">Avusturya</div>
+                        <h3 class="text-lg font-black text-white">KEBA KeContact P30</h3>
+                        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                            Akıllı ev (Smart Home) ve Güneş Enerjisi (GES) sistemleriyle tam otomatik entegrasyon. MID onaylı hassas enerji sayacı.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-xs">
+                        <span class="text-slate-400">11kW / 22kW</span>
+                        <span class="font-bold text-white font-mono">₺24.500</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOLAR (GES) INTEGRATION SECTION -->
+        <section class="py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+            <div class="rounded-3xl bg-gradient-to-r from-emerald-950/40 via-[#0a1824] to-cyan-950/40 border border-emerald-500/30 p-6 sm:p-12 shadow-2xl">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-black uppercase">
+                            <i class="fa-solid fa-solar-panel"></i> Güneşten 0 TL Yakıt Maliyeti
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                            Güneş Enerjisi (GES) ile Togg'unuzu <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Bedava Şarj Edin</span>
+                        </h2>
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                            Müstakil evinizin veya fabrikanızın çatısındaki Güneş Enerjisi Sistemi (GES) ile Wallbox'ınızı entegre ederek güneşin ürettiği fazla enerjiyi doğrudan Togg bataryasına aktarabilirsiniz.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300 pt-2">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Akıllı Solar Şarj Modu (Eco Solar)</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Şebekeden 0 kW çekiş garantisi</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Yıllık ~₺45.000 şarj tasarrufu</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> %100 Yeşil Sıfır Karbon ayak izi</div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 p-6 rounded-3xl bg-black/40 border border-white/10 text-center space-y-4">
+                        <div class="text-xs font-bold text-slate-400 uppercase">Örnek Güneş Şarj Verimliliği</div>
+                        <div class="text-4xl font-black text-emerald-400 font-mono">₺0 / 100 km</div>
+                        <p class="text-xs text-slate-300">
+                            10 kWp çatı GES günde ortalama <strong>40-50 kWh</strong> temiz enerji üretir. Bu enerji Togg T10X'e her gün yaklaşık <strong>250-280 km</strong> bedava menzil kazandırır.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#03050a] border-t border-white/5 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2 text-white font-black">
+                <i class="fa-solid fa-bolt text-cyan-400"></i> Togg<span class="text-cyan-400">Electric</span>
+            </div>
+            <div>
+                © 2026 ToggElectric. Tüm hakları saklıdır. Togg Connected Mobility Ekosistemi.
+            </div>
+            <div class="flex gap-4">
+                <a href="/" class="hover:text-white transition">Ana Sayfa</a>
+                <a href="/wallbox-rehberi.html" class="hover:text-white transition">Wallbox Rehberi</a>
+                <a href="https://servicetogg.com" class="hover:text-white transition">ServiceTogg</a>
+                <a href="https://chargetogg.com" class="hover:text-white transition">ChargeTogg</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
