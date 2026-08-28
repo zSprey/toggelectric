@@ -1,0 +1,79 @@
+{
+  "last_updated": "2026-08-28T12:00:00Z",
+  "source": "EPDK & Official CPO Data",
+  "total_sockets_turkey": 46665,
+  "total_ev_fleet_turkey": 464873,
+  "total_togg_fleet": 109944,
+  "operators": [
+    {
+      "name": "Trugo",
+      "brand": "Togg Akilli Sarj",
+      "dc_price_try_kwh": 14.98,
+      "ac_price_try_kwh": 9.95,
+      "max_power_kw": 300,
+      "sockets_count": 3868,
+      "provinces_covered": 81,
+      "is_official_togg": true
+    },
+    {
+      "name": "ZES",
+      "brand": "Zorlu Enerji",
+      "dc_price_try_kwh": 16.49,
+      "ac_price_try_kwh": 10.49,
+      "max_power_kw": 180,
+      "sockets_count": 5519,
+      "provinces_covered": 81,
+      "is_official_togg": false
+    },
+    {
+      "name": "Esarj",
+      "brand": "Enerjisa",
+      "dc_price_try_kwh": 14.90,
+      "ac_price_try_kwh": 9.90,
+      "max_power_kw": 180,
+      "sockets_count": 4200,
+      "provinces_covered": 78,
+      "is_official_togg": false
+    },
+    {
+      "name": "Astor",
+      "brand": "Astor Sarj",
+      "dc_price_try_kwh": 13.99,
+      "ac_price_try_kwh": 9.49,
+      "max_power_kw": 120,
+      "sockets_count": 2100,
+      "provinces_covered": 65,
+      "is_official_togg": false
+    },
+    {
+      "name": "Voltrun",
+      "brand": "Voltrun EV",
+      "dc_price_try_kwh": 15.50,
+      "ac_price_try_kwh": 10.20,
+      "max_power_kw": 150,
+      "sockets_count": 1800,
+      "provinces_covered": 55,
+      "is_official_togg": false
+    },
+    {
+      "name": "Sharz.net",
+      "brand": "Sharz",
+      "dc_price_try_kwh": null,
+      "ac_price_try_kwh": 8.99,
+      "max_power_kw": 22,
+      "sockets_count": 3500,
+      "provinces_covered": 70,
+      "is_official_togg": false
+    },
+    {
+      "name": "Tesla Supercharger",
+      "brand": "Tesla",
+      "dc_price_try_kwh": 16.99,
+      "ac_price_try_kwh": null,
+      "max_power_kw": 250,
+      "sockets_count": 450,
+      "provinces_covered": 25,
+      "is_official_togg": false
+    }
+  ]
+}
