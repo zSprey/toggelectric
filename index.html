@@ -102,6 +102,18 @@
             .glass-card { border: 1px solid #ddd !important; background: white !important; color: black !important; box-shadow: none !important; }
         }
     </style>
+    <!-- Google Analytics 4 & SoH Lead Tracking Hook -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TOGGCONNECTED"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TOGGCONNECTED');
+      function trackEcosystemEvent(eventName, params) {
+        if(typeof gtag === 'function') gtag('event', eventName, params);
+        console.log('[GA4 TRACK]', eventName, params);
+      }
+    </script>
 </head>
 <body class="bg-dark text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-slate-950">
 
