@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Preconnect & DNS-Prefetch Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title>Masaüstü QR Kodlu İstasyon & Servis Standı (A5/A6 PDF)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
@@ -19,8 +24,8 @@
 <body class="p-4 sm:p-8 flex flex-col items-center min-h-screen">
 
     <div class="max-w-md w-full mb-6 no-print flex justify-between items-center">
-        <a href="/" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Siteye Dön</a>
-        <button onclick="window.print()" class="bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow-lg flex items-center gap-2">
+        <a href="/" aria-label="Ana Sayfaya Dön" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Siteye Dön</a>
+        <button onclick="window.print()" aria-label="A5 Standı PDF Olarak Yazdır" class="bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-black px-5 py-2.5 rounded-xl text-xs shadow-lg flex items-center gap-2">
             <i class="fa-solid fa-print"></i> A5 Standı PDF Olarak Yazdır
         </button>
     </div>
@@ -39,7 +44,7 @@
 
         <!-- Dynamic QR Code Card -->
         <div class="bg-slate-50 p-6 rounded-2xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center space-y-3">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://chargetogg.com" alt="QR Code" class="w-44 h-44 rounded-xl shadow-sm">
+            <img loading="lazy" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://toggelectric.com" alt="QR Code" class="w-44 h-44 rounded-xl shadow-sm">
             <span class="text-xs font-black text-slate-800 uppercase tracking-wider">
                 <i class="fa-solid fa-camera text-cyan-600 mr-1"></i> Kameranızı Okutun
             </span>

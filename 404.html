@@ -1,42 +1,193 @@
 <!DOCTYPE html>
 <html lang="tr" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - Sayfa Bulunamadi | toggelectric.com</title>
-<meta name="robots" content="noindex, nofollow">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
-<style>
-body{font-family:'Plus Jakarta Sans',sans-serif;background:#050811;min-height:100vh;display:flex;align-items:center;justify-content:center;margin:0;overflow:hidden}
-.glow{text-shadow:0 0 40px rgba(16,185,129,.4),0 0 80px rgba(16,185,129,.2)}
-.glass{background:rgba(255,255,255,.03);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:24px}
-.float{animation:float 6s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
-.particle{position:absolute;border-radius:50%;background:rgba(16,185,129,.15);animation:drift 8s infinite}
-@keyframes drift{0%,100%{transform:translate(0,0) scale(1);opacity:.3}50%{transform:translate(30px,-40px) scale(1.5);opacity:.6}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Sayfa Bulunamadı | ToggElectric EV Topluluğu & SoH Raporlama</title>
+    <meta name="description" content="Aradığınız haber, batarya testi veya forum başlığı bulunamadı. ToggElectric ana sayfasına dönün.">
+    <meta name="theme-color" content="#00e5ff">
+    <link rel="canonical" href="https://toggelectric.com/404">
+
+    <!-- Preconnect & DNS-Prefetch Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#050811',
+                        darker: '#0c1222',
+                        brand: '#3b82f6',
+                        accent: '#00e5ff',
+                        emeraldPulse: '#10b981'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050811; color: #f1f5f9; }
+        .glass-panel {
+            background: rgba(12, 18, 34, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .btn-neon {
+            background: linear-gradient(135deg, #00e5ff 0%, #3b82f6 100%);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.35);
+            transition: all 0.3s ease;
+        }
+        .btn-neon:hover {
+            box-shadow: 0 0 35px rgba(0, 229, 255, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
-<body>
-<div class="particle" style="width:200px;height:200px;top:10%;left:5%;animation-delay:0s"></div>
-<div class="particle" style="width:150px;height:150px;top:60%;right:10%;animation-delay:2s"></div>
-<div class="particle" style="width:100px;height:100px;bottom:20%;left:40%;animation-delay:4s"></div>
-<div class="glass p-12 md:p-16 text-center max-w-lg mx-4 relative z-10">
-<div class="float mb-8">
-<i class="fas fa-bolt text-6xl text-emerald-400 mb-4 block"></i>
-</div>
-<h1 class="text-8xl font-black text-white glow mb-4">404</h1>
-<p class="text-xl text-gray-300 mb-2">Sayfa Bulunamadi</p>
-<p class="text-gray-500 mb-8">Aradiginiz sayfa tasinmis, kaldirilmis veya hic var olmamis olabilir.</p>
-<a href="/" class="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold px-8 py-4 rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg shadow-emerald-500/25">
-<i class="fas fa-home"></i> Ana Sayfaya Don
-</a>
-<div class="mt-8 flex justify-center gap-6">
-<a href="https://chargetogg.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-charging-station mr-1"></i>ChargeTogg</a>
-<a href="https://servicetogg.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-wrench mr-1"></i>ServiceTogg</a>
-<a href="https://toggelectric.com" class="text-gray-500 hover:text-emerald-400 transition-colors text-sm"><i class="fas fa-car mr-1"></i>ToggElectric</a>
-</div>
-</div>
+<body class="bg-dark text-slate-100 min-h-screen flex flex-col justify-between selection:bg-accent selection:text-slate-950">
+
+    <!-- Top Ecosystem Header Bar -->
+    <div class="bg-[#03050a] border-b border-white/5 py-1.5 px-4 text-[11px] font-bold text-slate-400">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-black bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 mr-1 animate-ping"></span> TOPLULUK & MEDYA
+                </span>
+                <span class="hidden sm:inline text-slate-500">Togg Connected Mobility Ekosistemi</span>
+            </div>
+            <div class="flex items-center gap-5">
+                <a href="https://chargetogg.com" aria-label="ChargeTogg Şarj Haritası" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-bolt"></i> ChargeTogg</a>
+                <a href="https://servicetogg.com" aria-label="ServiceTogg Yetkili Servis Rehberi" class="hover:text-white transition flex items-center gap-1"><i class="fa-solid fa-wrench"></i> ServiceTogg</a>
+                <a href="https://toggelectric.com" aria-label="ToggElectric Ana Sayfa" class="text-accent flex items-center gap-1 font-extrabold"><i class="fa-solid fa-comments"></i> ToggElectric</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="glass-panel border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+            <a href="/" aria-label="ToggElectric Ana Sayfa" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 shadow-lg shadow-cyan-500/30 group-hover:scale-105 transition-transform duration-300">
+                    <i class="fa-solid fa-car-side text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl font-black tracking-tight text-white flex items-center gap-1">
+                        Togg<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Electric</span>
+                    </span>
+                    <span class="text-[10px] font-semibold text-slate-400 tracking-wider">EV HABERLERİ & SOH PORTALI</span>
+                </div>
+            </a>
+            <div class="flex items-center gap-3">
+                <a href="/" aria-label="Ana Sayfaya Dön" class="btn-neon text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl flex items-center gap-2">
+                    <i class="fa-solid fa-house"></i> Ana Sayfaya Dön
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 404 Hero Content -->
+    <main class="flex-grow flex items-center justify-center py-16 px-4 relative overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-b from-cyan-500/10 via-blue-500/5 to-transparent rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+        <div class="max-w-2xl w-full text-center space-y-8 glass-panel p-8 sm:p-12 rounded-3xl border border-cyan-500/20 shadow-2xl">
+            <div class="relative inline-block">
+                <div class="text-7xl sm:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 select-none">
+                    404
+                </div>
+                <div class="absolute -top-3 -right-3 w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-400 text-lg shadow-lg">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight">Sayfa Bulunamadı</h1>
+                <p class="text-slate-400 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+                    Aradığınız test raporu, forum başlığı veya batarya ekspertiz sayfası bulunamadı. Topluluk portalımıza aşağıdaki bağlantılardan devam edebilirsiniz.
+                </p>
+            </div>
+
+            <!-- Quick Navigation Hub -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                <a href="/#haberler" aria-label="Togg Haberlerini Aç" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/40 transition group flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-black text-white group-hover:text-cyan-300 transition">Togg Haberleri & Kış Testi</div>
+                        <div class="text-[11px] text-slate-400">T10X & T10F kış tüketim analizi</div>
+                    </div>
+                </a>
+
+                <a href="/#soh" aria-label="Batarya SoH Sertifikası Al" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/40 transition group flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-car-battery"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-black text-white group-hover:text-emerald-300 transition">Batarya SoH Ekspertizi</div>
+                        <div class="text-[11px] text-slate-400">Doğrulanmış batarya sağlığı raporu</div>
+                    </div>
+                </a>
+
+                <a href="/#forum" aria-label="Togg Forumunu Aç" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/40 transition group flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-black text-white group-hover:text-cyan-300 transition">Topluluk Forumu</div>
+                        <div class="text-[11px] text-slate-400">Togg sahipleri canlı deneyim paylaşımı</div>
+                    </div>
+                </a>
+
+                <a href="https://chargetogg.com" aria-label="ChargeTogg Şarj Haritasını Aç" class="p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-400/40 transition group flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs font-black text-white group-hover:text-amber-300 transition">ChargeTogg Haritası</div>
+                        <div class="text-[11px] text-slate-400">300kW Trugo & ZES canlı soketler</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Back to Home Action -->
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="/" aria-label="ToggElectric Ana Sayfasına Dön" class="w-full sm:w-auto btn-neon text-slate-950 font-black text-sm px-8 py-3.5 rounded-xl flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Ana Sayfaya Dön
+                </a>
+                <a href="https://chargetogg.com" aria-label="ChargeTogg Şarj Haritası" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-bold text-sm px-6 py-3.5 rounded-xl flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-bolt text-cyan-400"></i> ChargeTogg
+                </a>
+                <a href="https://servicetogg.com" aria-label="ServiceTogg Yetkili Servis Rehberi" class="w-full sm:w-auto bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-bold text-sm px-6 py-3.5 rounded-xl flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-wrench text-rose-400"></i> ServiceTogg
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-6 px-4 text-center text-xs text-slate-500 bg-[#03050a]">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>&copy; 2026 ToggElectric. Bağımsız Togg Topluluk, Medya ve Batarya Portalı.</div>
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="/" aria-label="Ana Sayfa" class="hover:text-cyan-400 transition">Ana Sayfa</a>
+                <a href="/#haberler" aria-label="Haberler" class="hover:text-cyan-400 transition">Haberler</a>
+                <a href="/#soh" aria-label="SoH Batarya" class="hover:text-cyan-400 transition">Batarya SoH</a>
+                <a href="/#forum" aria-label="Forum" class="hover:text-cyan-400 transition">Forum</a>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

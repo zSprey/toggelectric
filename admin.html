@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Preconnect & DNS-Prefetch Performance Optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <title>Vercel Live Edge Analytics & Yönetim Paneli</title>
     <meta name="robots" content="noindex, nofollow">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,19 +46,19 @@
             <form onsubmit="handleLoginSubmit(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Kullanıcı Adı</label>
-                    <input type="text" id="userInput" required placeholder="musa" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                    <input type="text" id="userInput" aria-label="Yönetici Kullanıcı Adı" required placeholder="musa" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 font-mono">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Şifre</label>
-                    <input type="password" id="passInput" required placeholder="Fatma6872" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 font-mono">
+                    <input type="password" id="passInput" aria-label="Yönetici Parolası" required placeholder="Fatma6872" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3.5 text-xs text-white outline-none focus:border-cyan-400 font-mono">
                 </div>
-                <button type="submit" id="submitBtn" class="w-full btn-neon text-slate-950 font-black py-4 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20 transition hover:opacity-90 cursor-pointer">
+                <button type="submit" id="submitBtn" aria-label="Vercel Paneline Bağlan" class="w-full btn-neon text-slate-950 font-black py-4 rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/20 transition hover:opacity-90 cursor-pointer">
                     <i class="fa-solid fa-lock-open mr-1.5"></i> Vercel Paneline Bağlan
                 </button>
             </form>
 
             <div class="mt-6 pt-4 border-t border-white/5 text-center">
-                <a href="/" class="text-xs text-slate-400 hover:text-white transition">
+                <a href="/" aria-label="Ana Sayfaya Dön" class="text-xs text-slate-400 hover:text-white transition">
                     <i class="fa-solid fa-arrow-left mr-1"></i> Ana Sayfaya Dön
                 </a>
             </div>
@@ -81,26 +86,26 @@
                 <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> VERCEL LATENCY: <span id="realEdgeLatency">...</span> ms
                 </span>
-                <button onclick="measureRealVercelLatency()" title="Yenile" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
+                <button onclick="measureRealVercelLatency()" title="Yenile" aria-label="Vercel Gecikmesini Yeniden Ölç" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer">
                     <i class="fa-solid fa-arrows-rotate"></i>
                 </button>
-                <a href="/" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Siteye Dön</a>
-                <button onclick="logoutAdmin()" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer">Çıkış</button>
+                <a href="/" aria-label="Ana Sayfaya Dön" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Siteye Dön</a>
+                <button onclick="logoutAdmin()" aria-label="Yönetici Oturumunu Kapat" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-400 border border-rose-500/30 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer">Çıkış</button>
             </div>
         </div>
 
         <!-- Navigation Tabs -->
         <div class="flex gap-2 border-b border-white/10 text-xs font-bold pb-2 overflow-x-auto">
-            <button onclick="switchTab('analytics')" id="tabBtn-analytics" class="tab-btn active px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
+            <button onclick="switchTab('analytics')" aria-label="Canlı Ziyaretçi ve Hız Metrikleri Sekmesi" id="tabBtn-analytics" class="tab-btn active px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
                 <i class="fa-solid fa-chart-line mr-1.5"></i> Vercel Canlı Ziyaretçi & Hız Metrikleri
             </button>
-            <button onclick="switchTab('live-stream')" id="tabBtn-live-stream" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
+            <button onclick="switchTab('live-stream')" aria-label="Ziyaretçi IP ve Cihaz Telemetrisi Sekmesi" id="tabBtn-live-stream" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
                 <i class="fa-solid fa-network-wired mr-1.5"></i> Gerçek Ziyaretçi IP & Cihaz Telemetrisi
             </button>
-            <button onclick="switchTab('leads')" id="tabBtn-leads" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
+            <button onclick="switchTab('leads')" aria-label="B2B Veritabanı ve Başvurular Sekmesi" id="tabBtn-leads" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
                 <i class="fa-solid fa-database mr-1.5"></i> Gerçek B2B Veritabanı & Başvurular
             </button>
-            <button onclick="switchTab('system')" id="tabBtn-system" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
+            <button onclick="switchTab('system')" aria-label="Vercel Edge Serverless Sağlığı Sekmesi" id="tabBtn-system" class="tab-btn px-4 py-2 text-slate-300 hover:text-white transition whitespace-nowrap cursor-pointer">
                 <i class="fa-solid fa-microchip mr-1.5"></i> Vercel Edge Serverless Sağlığı
             </button>
         </div>
@@ -185,7 +190,7 @@
                         </h3>
                         <p class="text-xs text-slate-400">Sisteme şu anda bağlı olan cihazınızın ve Vercel Edge ağının gerçek verileri listelenmektedir.</p>
                     </div>
-                    <button onclick="fetchRealClientTelemetry()" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer">
+                    <button onclick="fetchRealClientTelemetry()" aria-label="Canlı Bağlantı Verilerini Yenile" class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer">
                         <i class="fa-solid fa-arrows-rotate mr-1"></i> Verileri Yenile
                     </button>
                 </div>
@@ -234,7 +239,7 @@
                     <h3 class="text-base font-black text-white flex items-center gap-2">
                         <i class="fa-solid fa-database text-emerald-400"></i> Gerçek B2B İstasyon & Filo Başvuruları Veritabanı
                     </h3>
-                    <button onclick="exportLeadsCsv()" class="bg-emerald-500 text-slate-950 font-black text-xs px-4 py-2 rounded-xl transition cursor-pointer">
+                    <button onclick="exportLeadsCsv()" aria-label="B2B Başvurularını CSV Olarak İndir" class="bg-emerald-500 text-slate-950 font-black text-xs px-4 py-2 rounded-xl transition cursor-pointer">
                         <i class="fa-solid fa-file-excel mr-1"></i> CSV Olarak İndir
                     </button>
                 </div>
