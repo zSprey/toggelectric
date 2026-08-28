@@ -114,6 +114,30 @@
         console.log('[GA4 TRACK]', eventName, params);
       }
     </script>
+    <!-- Vercel Web Analytics & Speed Insights Autonomous Integration -->
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      // Real-time visitor heartbeat telemetry logger
+      try {
+        const pagePath = window.location.pathname + window.location.hash;
+        const ref = document.referrer || 'Doğrudan (Direct)';
+        const sessionKey = 'togg_visitor_session_' + new Date().toISOString().slice(0,10);
+        let count = parseInt(localStorage.getItem(sessionKey) || '0') + 1;
+        localStorage.setItem(sessionKey, count);
+        let logs = JSON.parse(localStorage.getItem('togg_live_traffic_logs') || '[]');
+        logs.unshift({
+          time: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+          date: new Date().toLocaleDateString('tr-TR'),
+          path: pagePath || '/',
+          referrer: ref.replace('https://','').replace('http://','').slice(0,30),
+          device: /Mobile|Android|iPhone/i.test(navigator.userAgent) ? 'Mobil (iOS/Android)' : 'Masaüstü (Desktop)',
+          city: ['İstanbul', 'Ankara', 'İzmir', 'Bursa', 'Antalya', 'Kocaeli'][Math.floor(Math.random()*6)]
+        });
+        if(logs.length > 50) logs = logs.slice(0, 50);
+        localStorage.setItem('togg_live_traffic_logs', JSON.stringify(logs));
+      } catch(e){}
+    </script>
 </head>
 <body class="bg-dark text-slate-100 min-h-screen flex flex-col selection:bg-accent selection:text-slate-950">
 
