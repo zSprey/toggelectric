@@ -585,14 +585,14 @@
                                 <i class="fa-solid fa-car text-cyan-400 mr-1.5"></i> Togg Modeli
                             </label>
                             <div class="grid grid-cols-2 gap-3">
-                                <button type="button" id="btnModelLR" aria-label="T10X Long Range 88.5 kWh Modeli Seç" onclick="selectValuationModel('LR')" class="model-select-btn active p-4 rounded-2xl border-2 border-cyan-400 bg-cyan-500/10 text-left transition flex flex-col justify-between">
+                                <button type="button" id="btnModelLR" aria-label="T10X Long Range 88.5 kWh Modeli Seç" aria-label="T10X Long Range 88.5 kWh Modeli Seç" onclick="selectValuationModel('LR')" class="model-select-btn active p-4 rounded-2xl border-2 border-cyan-400 bg-cyan-500/10 text-left transition flex flex-col justify-between">
                                     <div>
                                         <span class="text-xs font-black text-cyan-400 uppercase tracking-wider">V2 / Uzun Menzil</span>
                                         <div class="text-base font-bold text-white mt-1">T10X Long Range</div>
                                     </div>
                                     <span class="text-xs text-slate-400 mt-2">88.5 kWh Batarya (400 km)</span>
                                 </button>
-                                <button type="button" id="btnModelStd" aria-label="T10X Standard 52.4 kWh Modeli Seç" onclick="selectValuationModel('STD')" class="model-select-btn p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-white/20 text-left transition flex flex-col justify-between">
+                                <button type="button" id="btnModelStd" aria-label="T10X Standard 52.4 kWh Modeli Seç" aria-label="T10X Standard 52.4 kWh Modeli Seç" onclick="selectValuationModel('STD')" class="model-select-btn p-4 rounded-2xl border border-white/10 bg-white/5 hover:border-white/20 text-left transition flex flex-col justify-between">
                                     <div>
                                         <span class="text-xs font-black text-slate-400 uppercase tracking-wider">V1 / Standart</span>
                                         <div class="text-base font-bold text-white mt-1">T10X Standard</div>
@@ -608,10 +608,10 @@
                                 <i class="fa-solid fa-calendar text-cyan-400 mr-1.5"></i> Model Yılı
                             </label>
                             <div class="grid grid-cols-4 gap-2">
-                                <button type="button" onclick="selectValuationYear(2023)" aria-label="2023 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2023">2023</button>
-                                <button type="button" onclick="selectValuationYear(2024)" aria-label="2024 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2024">2024</button>
-                                <button type="button" onclick="selectValuationYear(2025)" aria-label="2025 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2025">2025</button>
-                                <button type="button" onclick="selectValuationYear(2026)" aria-label="2026 Model Yılı Seç" class="year-btn active py-3 rounded-xl border-2 border-cyan-400 bg-cyan-500/15 text-sm font-bold text-cyan-300 transition" data-year="2026">2026</button>
+                                <button type="button" onclick="selectValuationYear(2023)" aria-label="2023 Model Yılı Seç" aria-label="2023 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2023">2023</button>
+                                <button type="button" onclick="selectValuationYear(2024)" aria-label="2024 Model Yılı Seç" aria-label="2024 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2024">2024</button>
+                                <button type="button" onclick="selectValuationYear(2025)" aria-label="2025 Model Yılı Seç" aria-label="2025 Model Yılı Seç" class="year-btn py-3 rounded-xl border border-white/10 bg-white/5 hover:border-cyan-400 text-sm font-bold text-slate-300 transition" data-year="2025">2025</button>
+                                <button type="button" onclick="selectValuationYear(2026)" aria-label="2026 Model Yılı Seç" aria-label="2026 Model Yılı Seç" class="year-btn active py-3 rounded-xl border-2 border-cyan-400 bg-cyan-500/15 text-sm font-bold text-cyan-300 transition" data-year="2026">2026</button>
                             </div>
                         </div>
 
@@ -691,7 +691,7 @@
 
                         <!-- Action Button inside Valuation Card -->
                         <div class="mt-8 pt-4 border-t border-white/10 space-y-2">
-                            <button type="button" onclick="requestValuationCertificate()" aria-label="Ücretsiz Ekspertiz Raporu Oluştur" class="w-full bg-gradient-to-r from-cyan-500 to-emerald-400 hover:opacity-95 text-slate-950 font-black text-xs sm:text-sm py-3.5 px-4 rounded-2xl shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 transition transform active:scale-95">
+                            <button type="button" onclick="requestValuationCertificate()" aria-label="Ücretsiz Ekspertiz Raporu Oluştur" aria-label="Ücretsiz Ekspertiz Raporu Oluştur" class="w-full bg-gradient-to-r from-cyan-500 to-emerald-400 hover:opacity-95 text-slate-950 font-black text-xs sm:text-sm py-3.5 px-4 rounded-2xl shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 transition transform active:scale-95">
                                 <i class="fa-solid fa-file-shield text-slate-950"></i> Ücretsiz Ekspertiz Raporu Oluştur
                             </button>
                             <div class="text-center text-[10px] text-slate-400">
