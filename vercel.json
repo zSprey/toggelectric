@@ -3,6 +3,10 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
       "source": "/admin",
       "destination": "/admin.html"
     },
@@ -13,10 +17,6 @@
     {
       "source": "/qr-stand",
       "destination": "/qr-stand.html"
-    },
-    {
-      "source": "/blog",
-      "destination": "/blog.html"
     }
   ],
   "headers": [
