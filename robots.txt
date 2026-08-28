@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Sitemap: https://chargetogg.com/sitemap.xml
+Sitemap: https://toggelectric.com/sitemap.xml
+Sitemap: https://servicetogg.com/sitemap.xml
