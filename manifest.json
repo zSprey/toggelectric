@@ -1,0 +1,12 @@
+{
+  "name": "ToggElectric | Elektrikli Arac Toplulugu ve SoH Ekspertiz",
+  "short_name": "Toggelectric",
+  "description": "Turkiye elektrikli arac toplulugu, multi-brand batarya SoH ekspertiz sertifikasi, ikinci el Togg degerleme araci ve gunluk EV haberleri.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050811",
+  "theme_color": "#10b981",
+  "icons": [
+    {"src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon"}
+  ]
+}
