@@ -3,58 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ToggElectric | Haber & Topluluk</title>
+    <title>ToggElectric | Türkiye'nin En Büyük Elektrikli Araç Topluluğu & Medya Portalı</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { brand: '#3b82f6', bgmain: '#09090b', bgsec: '#18181b', lightmain: '#f1f5f9', lightsec: '#ffffff' } } } }</script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#3b82f6',
+                        brandDark: '#1d4ed8',
+                        darkBg: '#090a0f',
+                        darkCard: '#121624',
+                        darkBorder: '#1e263d',
+                        lightBg: '#f8fafc',
+                        lightCard: '#ffffff'
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(18, 22, 36, 0.8); backdrop-filter: blur(16px); }
+    </style>
 </head>
-<body class="bg-lightmain dark:bg-bgmain text-gray-800 dark:text-gray-200 transition-colors">
-    <nav class="bg-white/80 dark:bg-bgmain/80 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
-            <span class="text-black dark:text-white text-2xl font-black"><i class="fa-solid fa-car-side text-brand mr-2"></i>Togg<span class="text-brand">Electric</span></span>
-            <div class="hidden md:flex space-x-6">
-                <button onclick="toggleWriterPanel()" class="text-brand font-bold"><i class="fa-solid fa-pen-nib mr-1"></i> Yazar Girisi</button>
-            </div>
-            <button onclick="toggleTheme()" class="text-gray-500 hover:text-brand"><i id="themeIcon" class="fa-solid fa-sun text-xl"></i></button>
-        </div>
-    </nav>
+<body class="bg-lightBg dark:bg-darkBg text-slate-800 dark:text-slate-100 transition-colors duration-300 antialiased min-h-screen flex flex-col">
 
-    <!-- Yazar Paneli (CMS) -->
-    <div id="writerPanel" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center">
-        <div class="bg-white dark:bg-bgsec p-8 rounded-2xl w-full max-w-2xl mx-4 border border-gray-200 dark:border-gray-800 shadow-2xl">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-black dark:text-white">CMS: Haber Ekle</h2>
-                <button onclick="toggleWriterPanel()" class="text-gray-500"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <div class="bg-slate-900 text-slate-300 text-xs border-b border-slate-800 py-1.5 px-4 overflow-hidden">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="bg-brand text-white text-[9px] font-black uppercase px-2 py-0.5 rounded">SON DAKİKA</span>
+                <span class="truncate">Togg T10F seri üretim hazırlıkları Gemlik tesisinde tamamlanıyor.</span>
             </div>
-            <form onsubmit="event.preventDefault(); alert('Makale veritabanina kaydedildi (Auto-Seed)'); toggleWriterPanel();" class="space-y-4">
-                <input type="text" placeholder="Haber Basligi" class="w-full bg-gray-100 dark:bg-bgmain border border-gray-300 dark:border-gray-700 p-3 rounded dark:text-white" required>
-                <textarea placeholder="Haber Icerigi (Markdown destekler)" rows="5" class="w-full bg-gray-100 dark:bg-bgmain border border-gray-300 dark:border-gray-700 p-3 rounded dark:text-white" required></textarea>
-                <button type="submit" class="w-full bg-brand text-white font-bold py-3 rounded">Yayinla</button>
-            </form>
+            <div class="hidden sm:flex items-center gap-4 text-[11px] text-slate-400">
+                <span><i class="fa-solid fa-users text-brand mr-1"></i> 24.800+ Üye</span>
+                <span><i class="fa-solid fa-newspaper text-emerald-400 mr-1"></i> Günlük 45+ İçerik</span>
+            </div>
         </div>
     </div>
 
-    <section class="max-w-7xl mx-auto px-4 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="newsGrid">
-            <div class="bg-white dark:bg-bgsec p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                <span class="text-brand text-xs font-bold uppercase mb-2 block">Guncelleme</span>
-                <h2 class="text-2xl font-black dark:text-white mb-2">TruOS v1.5.3 Yayinda</h2>
-                <p class="text-gray-500 text-sm">Adaptif hiz sabitleyici ve batarya optimizasyonu iceren yeni surum araclara gonderilmeye baslandi.</p>
+    <nav class="sticky top-0 z-50 glass border-b border-slate-200 dark:border-darkBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2.5 text-2xl font-black tracking-tight text-slate-900 dark:text-white">
+                <span class="w-10 h-10 rounded-xl bg-brand flex items-center justify-center text-white shadow-lg shadow-brand/30">
+                    <i class="fa-solid fa-bolt-lightning text-lg"></i>
+                </span>
+                <span>Togg<span class="text-brand">Electric</span></span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8 font-semibold text-sm">
+                <a href="#haberler" class="hover:text-brand transition">Haber Akışı</a>
+                <a href="#truos" class="hover:text-brand transition">TruOS Güncellemeleri</a>
+                <a href="#forum" class="hover:text-brand transition">Sahipler Forumu</a>
+                <a href="#rehber" class="hover:text-brand transition">EV Rehberi</a>
             </div>
-            <div class="bg-white dark:bg-bgsec p-6 rounded-3xl border border-gray-200 dark:border-gray-800">
-                <span class="text-brand text-xs font-bold uppercase mb-2 block">Yatirim</span>
-                <h2 class="text-2xl font-black dark:text-white mb-2">Trugo'dan 50 Yeni HPC</h2>
-                <p class="text-gray-500 text-sm">Ankara-Izmir otoyolunda 300 kW gucunde yeni istasyonlar aciliyor.</p>
+
+            <div class="flex items-center gap-3">
+                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl border border-slate-300 dark:border-darkBorder flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-brand transition">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+                <button onclick="openWriterModal()" class="bg-slate-200 dark:bg-darkCard hover:border-brand border border-slate-300 dark:border-darkBorder text-slate-800 dark:text-slate-200 text-xs font-bold px-3.5 py-2.5 rounded-xl transition flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-brand"></i> <span class="hidden sm:inline">İçerik Ekle</span>
+                </button>
+                <button onclick="openAuthModal()" id="authBtn" class="bg-brand hover:bg-brandDark text-white font-bold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-brand/25 flex items-center gap-2">
+                    <i class="fa-solid fa-user"></i> Giriş Yap
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="haberler" class="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <div class="lg:col-span-8 relative rounded-3xl overflow-hidden border border-slate-200 dark:border-darkBorder group min-h-[420px] flex flex-col justify-end p-8 bg-slate-900">
+                <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?q=80&w=1200" alt="Togg T10F" class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+                <div class="relative z-10 space-y-3">
+                    <span class="bg-brand text-white text-[10px] font-black uppercase px-3 py-1 rounded-full">Kapsamlı İnceleme</span>
+                    <h1 class="text-2xl sm:text-4xl font-black text-white leading-tight">
+                        Togg T10F Gemlik Pisti Test Sürüşü: 600 KM Menzil ve 0-100 Performansı
+                    </h1>
+                    <p class="text-sm text-slate-300 max-w-2xl hidden sm:block">
+                        Düşük sürtünme katsayısı (0.22 Cd) ve çift motorlu 435 HP AWD aktarma organıyla yeni fastback modelinin tüm yol verilerini inceledik.
+                    </p>
+                    <div class="flex items-center gap-4 text-xs text-slate-400 pt-2">
+                        <span><i class="fa-regular fa-clock mr-1"></i> 3 saat önce</span>
+                        <span><i class="fa-regular fa-eye mr-1"></i> 14.2k Okunma</span>
+                        <span><i class="fa-regular fa-comment mr-1"></i> 84 Yorum</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                
+                <div id="truos" class="p-6 rounded-3xl bg-gradient-to-br from-brand/10 to-slate-100 dark:to-darkCard border border-brand/20 relative overflow-hidden">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-brand block mb-1">OTA Güncelleme Takibi</span>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white">TruOS v1.5.3</h3>
+                        <span class="bg-green-500/10 text-green-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-green-500/20">Canlıda</span>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-300 font-medium">
+                        <li><i class="fa-solid fa-check text-brand mr-1.5"></i> Isı Pompası & Batarya Ön Isıtma Optimizasyonu</li>
+                        <li><i class="fa-solid fa-check text-brand mr-1.5"></i> Şerit Takip ve Otonom Park Hassasiyeti</li>
+                        <li><i class="fa-solid fa-check text-brand mr-1.5"></i> Apple CarPlay & Android Auto Entegrasyon İyileştirmesi</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 rounded-3xl bg-white dark:bg-darkCard border border-slate-200 dark:border-darkBorder hover:border-brand transition group flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] font-extrabold uppercase text-amber-500 mb-1 block">Şarj Altyapısı</span>
+                        <h4 class="font-bold text-slate-900 dark:text-white group-hover:text-brand transition">Trugo, 81 İlde 300 kW Ultra Hızlı Şarj İstasyon Sayısını 800'e Çıkardı</h4>
+                    </div>
+                    <div class="flex justify-between items-center text-xs text-slate-400 mt-4">
+                        <span>Altyapı Raporu</span>
+                        <span>Dün</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
+    <section id="forum" class="py-16 bg-slate-100 dark:bg-darkCard/40 border-t border-slate-200 dark:border-darkBorder">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-xs font-extrabold text-brand uppercase tracking-widest">Canlı Topluluk Panosu</span>
+                    <h2 class="text-3xl font-black text-slate-900 dark:text-white">Togg Sahipleri & Meraklıları Forumu</h2>
+                </div>
+                <button onclick="openNewThreadModal()" class="bg-brand hover:bg-brandDark text-white text-xs font-bold px-4 py-3 rounded-xl transition flex items-center gap-2 self-start sm:self-auto shadow-lg shadow-brand/20">
+                    <i class="fa-solid fa-plus"></i> Yeni Konu Aç
+                </button>
+            </div>
+
+            <div id="forumList" class="bg-white dark:bg-darkCard rounded-3xl border border-slate-200 dark:border-darkBorder divide-y divide-slate-200 dark:divide-darkBorder overflow-hidden shadow-sm"></div>
+        </div>
+    </section>
+
+    <div id="writerModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+        <div class="w-full max-w-2xl bg-white dark:bg-darkCard rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-darkBorder shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white"><i class="fa-solid fa-newspaper text-brand mr-2"></i>Yeni Makale / İnceleme Yayınla</h3>
+                <button onclick="closeWriterModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form onsubmit="handleArticleSubmit(event)" class="space-y-4">
+                <input type="text" placeholder="Makale Başlığı" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
+                <select class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
+                    <option>İnceleme & Test Sürüşü</option>
+                    <option>TruOS & Yazılım</option>
+                    <option>Batarya & Şarj Teknolojisi</option>
+                    <option>Sektör & Yatırım Haberleri</option>
+                </select>
+                <textarea placeholder="Makale İçeriği (Markdown ve zengin metin desteklenir)..." rows="5" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand"></textarea>
+                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl text-xs transition">Makaleyi Yayına Al</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="threadModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+        <div class="w-full max-w-lg bg-white dark:bg-darkCard rounded-3xl p-6 border border-slate-200 dark:border-darkBorder shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-black text-slate-900 dark:text-white"><i class="fa-solid fa-comments text-brand mr-2"></i>Forumda Konu Aç</h3>
+                <button onclick="closeNewThreadModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleThreadSubmit(event)" class="space-y-3">
+                <input type="text" id="threadTitle" placeholder="Tartışma veya Soru Başlığı" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
+                <textarea id="threadBody" placeholder="Detaylar ve deneyiminiz..." rows="4" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand"></textarea>
+                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl text-xs transition">Konuyu Paylaş</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="authModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm">
+        <div class="w-full max-w-sm bg-white dark:bg-darkCard rounded-3xl p-6 border border-slate-200 dark:border-darkBorder shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-black text-slate-900 dark:text-white">Topluluğa Katıl</h3>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleAuth(event)" class="space-y-3">
+                <input type="email" id="authEmail" placeholder="E-Posta Adresiniz" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
+                <input type="password" id="authPass" placeholder="Şifreniz" required class="w-full bg-slate-100 dark:bg-darkBg border border-slate-300 dark:border-darkBorder p-3 rounded-xl text-xs outline-none focus:border-brand">
+                <button type="submit" class="w-full bg-brand hover:bg-brandDark text-white font-bold py-3 rounded-xl text-xs transition">Giriş / Kayıt Ol</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-white dark:bg-darkBg border-t border-slate-200 dark:border-darkBorder py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 space-y-2">
+            <p class="font-bold text-slate-700 dark:text-slate-300">© 2026 ToggElectric. Türkiye'nin Bağımsız EV ve Teknoloji Topluluğu.</p>
+            <p>Resmi marka ile doğrudan ilişkisi yoktur. İçerikler kullanıcılar ve bağımsız editörler tarafından üretilir.</p>
+        </div>
+    </footer>
+
     <script>
+        const initialThreads = [
+            { id: 1, title: "T10X 2026 Kış Lastiği Deneyimleri: 19 inç vs 20 inç Tüketim Farkı", author: "MenzilUzmanı", replies: 142, views: "8.4k", icon: "fa-snowflake", tag: "POPÜLER" },
+            { id: 2, title: "TruOS v1.5.3 Sonrası Şerit Takip ve Tabela Okuma Hassasiyeti", author: "YazılımKaptanı", replies: 89, views: "4.1k", icon: "fa-code-branch", tag: "GÜNCEL" },
+            { id: 3, title: "İstanbul - Antalya Kesintisiz Seyahat: Trugo Oksijen Şarj İpuçları", author: "EVSeyyahı", replies: 210, views: "12.6k", icon: "fa-route", tag: "ÇÖZÜLDÜ" },
+            { id: 4, title: "Ev Tipi 11 kW AC Şarj İstasyonu Kurulumu ve İtfaiye/Site İzin Süreci", author: "ElektrikMüh", replies: 64, views: "3.2k", icon: "fa-house-bolt", tag: "REHBER" }
+        ];
+
+        let threads = [...initialThreads];
+
+        function renderThreads() {
+            const list = document.getElementById('forumList');
+            list.innerHTML = threads.map(t => `
+                <div class="p-5 hover:bg-slate-50 dark:hover:bg-darkBg/60 transition cursor-pointer flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 min-w-0">
+                        <div class="w-11 h-11 rounded-2xl bg-brand/10 text-brand border border-brand/20 flex items-center justify-center flex-shrink-0 text-lg">
+                            <i class="fa-solid ${t.icon}"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 mb-1 flex-wrap">
+                                <span class="bg-brand/10 text-brand text-[9px] font-black px-2 py-0.5 rounded-full border border-brand/20">${t.tag}</span>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white truncate">${t.title}</h4>
+                            </div>
+                            <p class="text-xs text-slate-500">Başlatan: <span class="font-semibold text-slate-400">${t.author}</span></p>
+                        </div>
+                    </div>
+                    <div class="hidden sm:flex items-center gap-6 text-right text-xs text-slate-400 flex-shrink-0">
+                        <div><span class="block font-bold text-slate-900 dark:text-white">${t.replies}</span> Yanıt</div>
+                        <div><span class="block font-bold text-slate-900 dark:text-white">${t.views}</span> Okunma</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openWriterModal() { document.getElementById('writerModal').classList.remove('hidden'); }
+        function closeWriterModal() { document.getElementById('writerModal').classList.add('hidden'); }
+        function openNewThreadModal() { document.getElementById('threadModal').classList.remove('hidden'); }
+        function closeNewThreadModal() { document.getElementById('threadModal').classList.add('hidden'); }
+        function openAuthModal() { document.getElementById('authModal').classList.remove('hidden'); }
+        function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
+
+        function handleArticleSubmit(e) {
+            e.preventDefault();
+            alert('Makale editoryal onay kuyruğuna alındı ve CMS veritabanına işlendi!');
+            closeWriterModal();
+            e.target.reset();
+        }
+
+        function handleThreadSubmit(e) {
+            e.preventDefault();
+            const title = document.getElementById('threadTitle').value;
+            threads.unshift({
+                id: Date.now(),
+                title: title,
+                author: "Siz (Kullanıcı)",
+                replies: 0,
+                views: "1",
+                icon: "fa-comment-dots",
+                tag: "YENİ"
+            });
+            renderThreads();
+            closeNewThreadModal();
+            alert('Konunuz başarıyla forumda yayınlandı!');
+            e.target.reset();
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const email = document.getElementById('authEmail').value;
+            document.getElementById('authBtn').innerHTML = `<i class="fa-solid fa-circle-check text-green-400"></i> ${email.split('@')[0]}`;
+            closeAuthModal();
+            alert(`Giriş başarılı! Hoş geldiniz, ${email}`);
+        }
+
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            document.getElementById('themeIcon').className = document.documentElement.classList.contains('dark') ? 'fa-solid fa-sun text-xl' : 'fa-solid fa-moon text-xl';
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('themeIcon').className = isDark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
         }
-        function toggleWriterPanel() { document.getElementById('writerPanel').classList.toggle('hidden'); }
+
+        window.onload = renderThreads;
     </script>
 </body>
 </html>
