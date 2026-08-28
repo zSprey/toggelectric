@@ -1,0 +1,45 @@
+version: "1.0"
+
+project:
+  name: "Togg Connected Ecosystem Security Audit"
+  organization: "Togg Digital Platforms"
+
+targets:
+  - url: "https://chargetogg.com"
+    environment: "production"
+    scope: "full-app"
+    description: "EV Charging Map, Simulator, and Smart Routing"
+
+  - url: "https://servicetogg.com"
+    environment: "production"
+    scope: "full-app"
+    description: "Aftermarket, Service Booking & Telemetry Wizard"
+
+  - url: "https://toggelectric.com"
+    environment: "production"
+    scope: "full-app"
+    description: "EV Community Forum & SoH Battery Certification"
+
+scan_policy:
+  mode: "autonomous_pentest"
+  intensity: "standard"
+  certainty_threshold: 0.95
+
+assessment_modules:
+  - owasp_top_10:
+      injection: true
+      broken_authentication: true
+      sensitive_data_exposure: true
+      cross_site_scripting_xss: true
+      insecure_deserialization: true
+      known_vulnerabilities_cve: true
+
+  - web_application_security:
+      content_security_policy_audit: true
+      cors_misconfiguration: true
+      rate_limiting_resilience: true
+      jwt_token_security: true
+
+autonomous_remediation:
+  generate_pr: true
+  auto_patch_severity: ["low", "medium", "high"]
